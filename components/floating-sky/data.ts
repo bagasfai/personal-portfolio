@@ -102,6 +102,8 @@ export interface Project {
   lift: string;
   float: string;
   delay: string;
+  demoLink: string | null;
+  githubLink: string | null;
 }
 
 export interface Step {
@@ -241,8 +243,8 @@ export function createLibraryDecor(): LibraryDecor {
   const lanterns: Lantern[] = lanternPositions.map(([left, top], i) => ({
     left,
     top,
-    size: (22 + (i % 3) * 6) + "px",
-    string: (30 + (i % 4) * 18) + "px",
+    size: 22 + (i % 3) * 6 + "px",
+    string: 30 + (i % 4) * 18 + "px",
     float: (4 + (i % 3) * 0.9).toFixed(1) + "s",
     delay: (-(i * 0.7)).toFixed(1) + "s",
     sway: (5 + (i % 3)).toFixed(1) + "s",
@@ -253,16 +255,86 @@ export function createLibraryDecor(): LibraryDecor {
 }
 
 const CRYSTAL_BASE = [
-  { name: "React", years: "5 yrs", c1: "#bfe6ff", c2: "#4aa3d6", glow: "rgba(120,200,255,.4)", desc: "Interfaces that feel weightless — hooks, suspense, and animation woven together." },
-  { name: "TypeScript", years: "5 yrs", c1: "#c3d4ff", c2: "#4f6fd6", glow: "rgba(120,150,255,.4)", desc: "Types as a safety net you forget is there. Fewer surprises, calmer refactors." },
-  { name: "Node.js", years: "5 yrs", c1: "#cdeecb", c2: "#5aa06e", glow: "rgba(140,210,150,.4)", desc: "APIs, streams, and services that stay quiet under load." },
-  { name: "Next.js", years: "4 yrs", c1: "#e6e2f5", c2: "#6a6ea6", glow: "rgba(170,160,220,.4)", desc: "Rendering on the edge — fast first paint, gentle hydration." },
-  { name: "PostgreSQL", years: "4 yrs", c1: "#c9d9ff", c2: "#3f63c8", glow: "rgba(120,160,255,.38)", desc: "Relational thinking, thoughtful indexes, data that ages well." },
-  { name: "Python", years: "4 yrs", c1: "#ffe3bf", c2: "#d69a4a", glow: "rgba(255,200,130,.4)", desc: "Scripts, pipelines, and the occasional model — glue that holds systems together." },
-  { name: "GraphQL", years: "3 yrs", c1: "#ffcfe4", c2: "#d64f96", glow: "rgba(255,150,200,.38)", desc: "One graph to ask anything — schemas that stay honest." },
-  { name: "AWS", years: "4 yrs", c1: "#ffd9c0", c2: "#d67a4a", glow: "rgba(255,170,120,.38)", desc: "Infrastructure as calm weather — provisioned, observed, forgotten." },
-  { name: "Docker", years: "4 yrs", c1: "#c5e8ff", c2: "#4a90d6", glow: "rgba(120,190,255,.38)", desc: "Ships that always sail the same. Reproducible from laptop to cloud." },
-  { name: "Tailwind", years: "3 yrs", c1: "#c0f0ea", c2: "#3aa89a", glow: "rgba(120,220,205,.4)", desc: "Design decisions made in the markup — fast, consistent, legible." },
+  {
+    name: "React",
+    years: "5 yrs",
+    c1: "#bfe6ff",
+    c2: "#4aa3d6",
+    glow: "rgba(120,200,255,.4)",
+    desc: "Interfaces that feel weightless — hooks, suspense, and animation woven together.",
+  },
+  {
+    name: "TypeScript",
+    years: "5 yrs",
+    c1: "#c3d4ff",
+    c2: "#4f6fd6",
+    glow: "rgba(120,150,255,.4)",
+    desc: "Types as a safety net you forget is there. Fewer surprises, calmer refactors.",
+  },
+  {
+    name: "Node.js",
+    years: "5 yrs",
+    c1: "#cdeecb",
+    c2: "#5aa06e",
+    glow: "rgba(140,210,150,.4)",
+    desc: "APIs, streams, and services that stay quiet under load.",
+  },
+  {
+    name: "Next.js",
+    years: "4 yrs",
+    c1: "#e6e2f5",
+    c2: "#6a6ea6",
+    glow: "rgba(170,160,220,.4)",
+    desc: "Rendering on the edge — fast first paint, gentle hydration.",
+  },
+  {
+    name: "PostgreSQL",
+    years: "4 yrs",
+    c1: "#c9d9ff",
+    c2: "#3f63c8",
+    glow: "rgba(120,160,255,.38)",
+    desc: "Relational thinking, thoughtful indexes, data that ages well.",
+  },
+  {
+    name: "Python",
+    years: "4 yrs",
+    c1: "#ffe3bf",
+    c2: "#d69a4a",
+    glow: "rgba(255,200,130,.4)",
+    desc: "Scripts, pipelines, and the occasional model — glue that holds systems together.",
+  },
+  {
+    name: "GraphQL",
+    years: "3 yrs",
+    c1: "#ffcfe4",
+    c2: "#d64f96",
+    glow: "rgba(255,150,200,.38)",
+    desc: "One graph to ask anything — schemas that stay honest.",
+  },
+  {
+    name: "AWS",
+    years: "4 yrs",
+    c1: "#ffd9c0",
+    c2: "#d67a4a",
+    glow: "rgba(255,170,120,.38)",
+    desc: "Infrastructure as calm weather — provisioned, observed, forgotten.",
+  },
+  {
+    name: "Docker",
+    years: "4 yrs",
+    c1: "#c5e8ff",
+    c2: "#4a90d6",
+    glow: "rgba(120,190,255,.38)",
+    desc: "Ships that always sail the same. Reproducible from laptop to cloud.",
+  },
+  {
+    name: "Tailwind",
+    years: "3 yrs",
+    c1: "#c0f0ea",
+    c2: "#3aa89a",
+    glow: "rgba(120,220,205,.4)",
+    desc: "Design decisions made in the markup — fast, consistent, legible.",
+  },
 ];
 
 export function getCrystals(): Crystal[] {
@@ -288,16 +360,85 @@ export function getCrystals(): Crystal[] {
 }
 
 const PROJECT_BASE = [
-  { name: "Project One", glyph: "✦", tag: "WEB APP", desc: "A placeholder for something you built — swap in the story, the stack, and the links when you decide.", c1: "#a9c2ff", c2: "#6f7fd6", glow: "rgba(140,160,255,.4)", badges: ["React", "Node", "Postgres"] },
-  { name: "Project Two", glyph: "❋", tag: "PLATFORM", desc: "Room for a favourite build. Describe the problem, the shape of the solution, and what felt good about it.", c1: "#a8e6c8", c2: "#4fa880", glow: "rgba(120,220,170,.4)", badges: ["Next.js", "GraphQL"] },
-  { name: "Project Three", glyph: "✺", tag: "MOBILE", desc: "Another empty tower waiting for a real project. Keep the copy warm and human — say what it feels like to use.", c1: "#ffc9dd", c2: "#d66f9a", glow: "rgba(255,150,195,.4)", badges: ["React Native", "AWS", "TS"] },
-  { name: "Project Four", glyph: "❂", tag: "TOOLING", desc: "A slot for a tool, library, or experiment. Placeholder text you can replace whenever inspiration lands.", c1: "#ffd9b8", c2: "#d69a4a", glow: "rgba(255,190,120,.4)", badges: ["Python", "Docker"] },
-  { name: "Project Five", glyph: "✧", tag: "DESIGN", desc: "Reserved for a design-heavy build. Talk about the details you sweated and the calm you were chasing.", c1: "#d8ccff", c2: "#8a76d6", glow: "rgba(170,150,240,.4)", badges: ["Figma", "Framer"] },
-  { name: "Project Six", glyph: "❈", tag: "OPEN SOURCE", desc: "One more placeholder tower. Add a project you gave back to the community, or delete it — your city, your rules.", c1: "#bfe6ff", c2: "#4a90d6", glow: "rgba(120,190,255,.4)", badges: ["Rust", "WASM"] },
+  {
+    name: "Project One",
+    glyph: "✦",
+    tag: "WEB APP",
+    desc: "A placeholder for something you built — swap in the story, the stack, and the links when you decide.",
+    c1: "#a9c2ff",
+    c2: "#6f7fd6",
+    glow: "rgba(140,160,255,.4)",
+    badges: ["React", "Node", "Postgres"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Two",
+    glyph: "❋",
+    tag: "PLATFORM",
+    desc: "Room for a favourite build. Describe the problem, the shape of the solution, and what felt good about it.",
+    c1: "#a8e6c8",
+    c2: "#4fa880",
+    glow: "rgba(120,220,170,.4)",
+    badges: ["Next.js", "GraphQL"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Three",
+    glyph: "✺",
+    tag: "MOBILE",
+    desc: "Another empty tower waiting for a real project. Keep the copy warm and human — say what it feels like to use.",
+    c1: "#ffc9dd",
+    c2: "#d66f9a",
+    glow: "rgba(255,150,195,.4)",
+    badges: ["React Native", "AWS", "TS"],
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Four",
+    glyph: "❂",
+    tag: "TOOLING",
+    desc: "A slot for a tool, library, or experiment. Placeholder text you can replace whenever inspiration lands.",
+    c1: "#ffd9b8",
+    c2: "#d69a4a",
+    glow: "rgba(255,190,120,.4)",
+    badges: ["Python", "Docker"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Five",
+    glyph: "✧",
+    tag: "DESIGN",
+    desc: "Reserved for a design-heavy build. Talk about the details you sweated and the calm you were chasing.",
+    c1: "#d8ccff",
+    c2: "#8a76d6",
+    glow: "rgba(170,150,240,.4)",
+    badges: ["Figma", "Framer"],
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Six",
+    glyph: "❈",
+    tag: "OPEN SOURCE",
+    desc: "One more placeholder tower. Add a project you gave back to the community, or delete it — your city, your rules.",
+    c1: "#bfe6ff",
+    c2: "#4a90d6",
+    glow: "rgba(120,190,255,.4)",
+    badges: ["Rust", "WASM"],
+  },
 ];
 
 export function getProjects(): Project[] {
-  const aligns: Project["align"][] = ["end", "center", "end", "center", "end", "center"];
+  const aligns: Project["align"][] = [
+    "end",
+    "center",
+    "end",
+    "center",
+    "end",
+    "center",
+  ];
   const lifts = ["0px", "38px", "14px", "46px", "0px", "30px"];
   return PROJECT_BASE.map((p, i) => ({
     i,
@@ -313,14 +454,48 @@ export function getProjects(): Project[] {
       dur: 16 + j * 5 + "s",
       delay: -(j * 3.5) + "s",
     })),
+    demoLink: p.demoLink ? p.demoLink : null,
+    githubLink: p.githubLink ? p.githubLink : null,
   }));
 }
 
 const STEP_BASE = [
-  { period: "NOW · 2026", place: "Somewhere in the clouds", role: "Senior Full-Stack Developer", desc: "A placeholder chapter for your current role — what you own, the calm systems you keep aloft, the people you build with.", tags: ["Leadership", "React", "Cloud"], accent: "#7f8fd6", glyph: "✦" },
-  { period: "2023 — 2025", place: "A studio you loved", role: "Product Engineer", desc: "Room to describe a formative role. The messy middle, the shipped things, the details you refused to skip.", tags: ["Next.js", "Node", "Design"], accent: "#4fa880", glyph: "❋" },
-  { period: "2021 — 2023", place: "A growing team", role: "Full-Stack Developer", desc: "Placeholder for the years you found your stride. Swap in the wins and the lessons whenever you like.", tags: ["TypeScript", "Postgres"], accent: "#d66f9a", glyph: "✺" },
-  { period: "2019 — 2021", place: "Where it began", role: "Junior Developer", desc: "The first stone. A gentle note about starting out, the curiosity that carried you, the first thing that shipped.", tags: ["JavaScript", "APIs"], accent: "#d69a4a", glyph: "✧" },
+  {
+    period: "NOW · 2026",
+    place: "Somewhere in the clouds",
+    role: "Senior Full-Stack Developer",
+    desc: "A placeholder chapter for your current role — what you own, the calm systems you keep aloft, the people you build with.",
+    tags: ["Leadership", "React", "Cloud"],
+    accent: "#7f8fd6",
+    glyph: "✦",
+  },
+  {
+    period: "2023 — 2025",
+    place: "A studio you loved",
+    role: "Product Engineer",
+    desc: "Room to describe a formative role. The messy middle, the shipped things, the details you refused to skip.",
+    tags: ["Next.js", "Node", "Design"],
+    accent: "#4fa880",
+    glyph: "❋",
+  },
+  {
+    period: "2021 — 2023",
+    place: "A growing team",
+    role: "Full-Stack Developer",
+    desc: "Placeholder for the years you found your stride. Swap in the wins and the lessons whenever you like.",
+    tags: ["TypeScript", "Postgres"],
+    accent: "#d66f9a",
+    glyph: "✺",
+  },
+  {
+    period: "2019 — 2021",
+    place: "Where it began",
+    role: "Junior Developer",
+    desc: "The first stone. A gentle note about starting out, the curiosity that carried you, the first thing that shipped.",
+    tags: ["JavaScript", "APIs"],
+    accent: "#d69a4a",
+    glyph: "✧",
+  },
 ];
 
 export function getSteps(): Step[] {
@@ -335,9 +510,39 @@ export function getSteps(): Step[] {
 
 export function getArticles(): Article[] {
   return [
-    { title: "On building software that feels like weather", excerpt: "A placeholder essay on calm interfaces — present, gentle, easy to be around.", topic: "CRAFT", date: "Jun 2026", read: "6 min", glyph: "❋", c1: "#a9c2ff", c2: "#6f7fd6" },
-    { title: "The quiet art of the empty state", excerpt: "Room for your thoughts on the moments before a screen fills with data.", topic: "DESIGN", date: "Apr 2026", read: "4 min", glyph: "✦", c1: "#a8e6c8", c2: "#4fa880" },
-    { title: "Notes from the middle of the stack", excerpt: "A placeholder piece about the plumbing nobody sees but everybody feels.", topic: "ENGINEERING", date: "Feb 2026", read: "8 min", glyph: "✺", c1: "#ffc9dd", c2: "#d66f9a" },
+    {
+      title: "On building software that feels like weather",
+      excerpt:
+        "A placeholder essay on calm interfaces — present, gentle, easy to be around.",
+      topic: "CRAFT",
+      date: "Jun 2026",
+      read: "6 min",
+      glyph: "❋",
+      c1: "#a9c2ff",
+      c2: "#6f7fd6",
+    },
+    {
+      title: "The quiet art of the empty state",
+      excerpt:
+        "Room for your thoughts on the moments before a screen fills with data.",
+      topic: "DESIGN",
+      date: "Apr 2026",
+      read: "4 min",
+      glyph: "✦",
+      c1: "#a8e6c8",
+      c2: "#4fa880",
+    },
+    {
+      title: "Notes from the middle of the stack",
+      excerpt:
+        "A placeholder piece about the plumbing nobody sees but everybody feels.",
+      topic: "ENGINEERING",
+      date: "Feb 2026",
+      read: "8 min",
+      glyph: "✺",
+      c1: "#ffc9dd",
+      c2: "#d66f9a",
+    },
   ];
 }
 

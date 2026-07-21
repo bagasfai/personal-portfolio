@@ -9,7 +9,10 @@ interface AudioRig {
 
 function getAudioContextCtor(): typeof AudioContext | null {
   if (typeof window === "undefined") return null;
-  const w = window as unknown as { AudioContext?: typeof AudioContext; webkitAudioContext?: typeof AudioContext };
+  const w = window as unknown as {
+    AudioContext?: typeof AudioContext;
+    webkitAudioContext?: typeof AudioContext;
+  };
   return w.AudioContext ?? w.webkitAudioContext ?? null;
 }
 
@@ -122,8 +125,14 @@ export function useAmbientSound() {
       }
       const now = rig.ctx.currentTime;
       rig.master.gain.cancelScheduledValues(now);
-      rig.master.gain.setValueAtTime(Math.max(0.0001, rig.master.gain.value), now);
-      rig.master.gain.linearRampToValueAtTime(on ? 0.5 : 0.0001, now + (on ? 2.4 : 0.7));
+      rig.master.gain.setValueAtTime(
+        Math.max(0.0001, rig.master.gain.value),
+        now,
+      );
+      rig.master.gain.linearRampToValueAtTime(
+        on ? 0.5 : 0.0001,
+        now + (on ? 2.4 : 0.7),
+      );
       setSoundOn(on);
       try {
         localStorage.setItem("sky-sound", on ? "1" : "0");
@@ -131,7 +140,7 @@ export function useAmbientSound() {
         // storage unavailable — sound preference just won't persist
       }
     },
-    [buildAudio]
+    [buildAudio],
   );
 
   const toggleSound = useCallback(() => {

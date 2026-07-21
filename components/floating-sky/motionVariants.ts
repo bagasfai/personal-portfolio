@@ -1,7 +1,9 @@
 import type { Variants } from "motion/react";
 
 export const EASE_SOFT: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
-export const EASE_REVEAL: [number, number, number, number] = [0.2, 0.85, 0.25, 1];
+export const EASE_REVEAL: [number, number, number, number] = [
+  0.2, 0.85, 0.25, 1,
+];
 
 /** `whileInView` replacement for the reference's IntersectionObserver reveal. */
 export const revealVariants: Variants = {

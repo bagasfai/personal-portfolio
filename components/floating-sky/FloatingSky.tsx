@@ -1,7 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AnimatePresence, useMotionValue, useReducedMotion, useSpring } from "motion/react";
+import {
+  AnimatePresence,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react";
 import { SkyProvider } from "./SkyContext";
 import { useAmbientSound } from "./useAmbientSound";
 import Atmosphere from "./Atmosphere";
@@ -57,7 +62,9 @@ export default function FloatingSky() {
     } catch {
       seen = false;
     }
-    const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     if (seen || reduce) {
       // One-time read of sessionStorage/matchMedia on mount — can't run during
@@ -81,7 +88,7 @@ export default function FloatingSky() {
 
   const skyValue = useMemo(
     () => ({ sx, sy, cx, cy, night, reducedMotion: Boolean(prefersReduced) }),
-    [sx, sy, cx, cy, night, prefersReduced]
+    [sx, sy, cx, cy, night, prefersReduced],
   );
 
   const theme = night ? THEME_NIGHT : THEME_DAY;
@@ -89,13 +96,20 @@ export default function FloatingSky() {
   return (
     <div
       style={{ ...theme } as React.CSSProperties}
-      className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-[var(--ink)] bg-[var(--sky-c)] overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
+      className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
     >
-      <AnimatePresence>{showIntro && <IntroCurtain visible={showIntro} />}</AnimatePresence>
+      <AnimatePresence>
+        {showIntro && <IntroCurtain visible={showIntro} />}
+      </AnimatePresence>
 
       <SkyProvider value={skyValue}>
         <Atmosphere decor={decor} />
-        <Compass night={night} toggleNight={toggleNight} soundOn={soundOn} toggleSound={toggleSound} />
+        <Compass
+          night={night}
+          toggleNight={toggleNight}
+          soundOn={soundOn}
+          toggleSound={toggleSound}
+        />
         <Hero entered={heroEntered} />
         <About />
         <Skills />

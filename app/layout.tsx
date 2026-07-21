@@ -22,9 +22,57 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Bagaskara — Floating Sky Portfolio",
+  metadataBase: new URL("https://bagaskara.com"),
+  title: "Bagaskara - Floating Sky Portfolio",
   description:
     "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  openGraph: {
+    title: "Bagaskara - Floating Sky Portfolio",
+    description:
+      "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+    images: "/og.png",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bagaskara - Floating Sky Portfolio",
+    description:
+      "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+    images: "/og.png",
+  },
+  icons: {
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/site.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  keywords: [
+    "Bagaskara",
+    "Muhammad Bagaskara",
+    "Web Developer",
+    "Personal Page",
+    "freelance",
+    "Web Dev",
+    "Fullstack",
+  ],
+  authors: [{ name: "Bagaskara", url: "https://bagaskara.com" }],
+  creator: "Bagaskara",
+  publisher: "Bagaskara",
 };
 
 export default function RootLayout({
