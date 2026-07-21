@@ -1,0 +1,285 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+.sky-field {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.sky-field:focus {
+  border-color: #a9b6ff;
+  box-shadow: 0 0 0 3px rgba(160, 170, 255, 0.22);
+}
+
+::selection {
+  background: rgba(180, 170, 255, 0.35);
+}
+
+@keyframes driftX {
+  from {
+    transform: translateX(-30vw);
+  }
+  to {
+    transform: translateX(130vw);
+  }
+}
+@keyframes driftXrev {
+  from {
+    transform: translateX(130vw);
+  }
+  to {
+    transform: translateX(-30vw);
+  }
+}
+@keyframes floatA {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateY(-22px) rotate(0.4deg);
+  }
+}
+@keyframes floatB {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+@keyframes floatC {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+@keyframes rise {
+  0% {
+    transform: translateY(46px);
+    opacity: 0;
+  }
+  14% {
+    opacity: 0.85;
+  }
+  82% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes rayPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes birdFly {
+  0% {
+    transform: translateX(-12vw) translateY(0);
+  }
+  50% {
+    transform: translateX(55vw) translateY(-22px);
+  }
+  100% {
+    transform: translateX(118vw) translateY(4px);
+  }
+}
+@keyframes flap {
+  0%,
+  100% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+}
+@keyframes leafFall {
+  0% {
+    transform: translateY(-12px) rotate(-6deg);
+  }
+  50% {
+    transform: translateY(16px) rotate(22deg);
+  }
+  100% {
+    transform: translateY(-12px) rotate(-6deg);
+  }
+}
+@keyframes blobDrift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(14px, -18px) scale(1.05);
+  }
+  66% {
+    transform: translate(-12px, 12px) scale(0.97);
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+@keyframes spinY {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+@keyframes anvilFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(0.5deg);
+  }
+}
+@keyframes towerFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes stoneFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes haloPulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.12);
+  }
+}
+@keyframes paperDrift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(5deg);
+  }
+}
+@keyframes lanternGlow {
+  0%,
+  100% {
+    opacity: 0.6;
+    filter: blur(5px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(7px);
+  }
+}
+@keyframes lanternSway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes badgeOrbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit, 70px)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--orbit, 70px)) rotate(-360deg);
+  }
+}
+@keyframes grainShift {
+  0% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-4%, 3%);
+  }
+  40% {
+    transform: translate(3%, -2%);
+  }
+  60% {
+    transform: translate(-2%, 4%);
+  }
+  80% {
+    transform: translate(4%, 2%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@media (max-width: 720px) {
+  #pathwrap [data-step] {
+    justify-content: flex-end !important;
+  }
+  #pathwrap .step-card {
+    width: calc(100% - 56px) !important;
+  }
+  #pathwrap > div:first-child {
+    left: 16px !important;
+    transform: none !important;
+  }
+  #pathwrap .step-node {
+    left: 16px !important;
+  }
+}
