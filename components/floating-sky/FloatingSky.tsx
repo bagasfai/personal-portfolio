@@ -21,6 +21,7 @@ import Blog from "./Blog";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import { createAtmosphereDecor, THEME_DAY, THEME_NIGHT } from "./data";
+import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
 export default function FloatingSky() {
@@ -58,7 +59,7 @@ export default function FloatingSky() {
   useEffect(() => {
     let seen = false;
     try {
-      seen = sessionStorage.getItem("sky-intro") === "1";
+      seen = sessionStorage.getItem(INTRO_STORAGE_KEY) === "1";
     } catch {
       seen = false;
     }
@@ -78,11 +79,11 @@ export default function FloatingSky() {
       setShowIntro(false);
       setHeroEntered(true);
       try {
-        sessionStorage.setItem("sky-intro", "1");
+        sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
       } catch {
         // storage unavailable — intro will simply replay next load
       }
-    }, 2090);
+    }, INTRO_TOTAL_MS);
     return () => clearTimeout(t);
   }, []);
 

@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
+import { INTRO_EXIT_S, INTRO_LIFT_MS } from "./introTiming";
 
 export default function IntroCurtain({ visible }: { visible: boolean }) {
   const [lifting, setLifting] = useState(false);
 
   useEffect(() => {
     if (!visible) return;
-    const t = setTimeout(() => setLifting(true), 1750);
+    const t = setTimeout(() => setLifting(true), INTRO_LIFT_MS);
     return () => clearTimeout(t);
   }, [visible]);
 
@@ -17,7 +18,7 @@ export default function IntroCurtain({ visible }: { visible: boolean }) {
       key="curtain"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1.1, ease: "easeInOut" }}
+      transition={{ duration: INTRO_EXIT_S, ease: "easeInOut" }}
       className="fixed inset-0 z-200 flex items-center justify-center bg-[linear-gradient(180deg,#dbe7ff_0%,#eef1ff_46%,#fff4ec_100%)] pointer-events-none"
     >
       <div className="absolute inset-0 overflow-hidden">
