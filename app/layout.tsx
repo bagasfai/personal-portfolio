@@ -1,6 +1,20 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
+import {
+  INTRO_STORAGE_KEY,
+  REDUCED_MOTION_QUERY,
+} from "@/components/floating-sky/introTiming";
+
+// Runs synchronously during HTML parsing, before any body content is parsed, so the
+// decision is recorded before the browser paints. useEffect runs after paint and
+// useLayoutEffect runs after hydration — neither is early enough. See
+// node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
+const introSkipScript = `(function(){try{var s=sessionStorage.getItem(${JSON.stringify(
+  INTRO_STORAGE_KEY,
+)})==="1";var m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
+  REDUCED_MOTION_QUERY,
+)}).matches);document.documentElement.dataset.skyIntro=(s||m)?"0":"1";}catch(e){}})();`;
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -83,8 +97,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-sky-intro="1"
+      suppressHydrationWarning
       className={`${instrumentSerif.variable} ${manrope.variable} ${caveat.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introSkipScript }} />
+        <noscript>
+          <style>{`[data-intro-curtain]{display:none}[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body>{children}</body>
     </html>
   );

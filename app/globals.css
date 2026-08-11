@@ -15,3 +15,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Set by the pre-paint script in app/layout.tsx. "0" means this visitor has already
+   seen the intro this session, or prefers reduced motion. */
+html[data-sky-intro="0"] [data-intro-curtain] {
+  display: none;
+}

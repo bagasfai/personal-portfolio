@@ -53,28 +53,22 @@ export default function FloatingSky() {
     return () => window.removeEventListener("pointermove", onMove);
   }, [prefersReduced, mvx, mvy, cx, cy]);
 
-  const [showIntro, setShowIntro] = useState(false);
+  // Rendered on the server so the curtain is the first thing painted. Server and client
+  // initial renders both produce `true`, so the trees match and hydration is clean. The
+  // skip decision is made before paint by the inline script in app/layout.tsx.
+  const [showIntro, setShowIntro] = useState(true);
   const [heroEntered, setHeroEntered] = useState(false);
 
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem(INTRO_STORAGE_KEY) === "1";
-    } catch {
-      seen = false;
-    }
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-    if (seen || reduce) {
-      // One-time read of sessionStorage/matchMedia on mount — can't run during
-      // render (SSR has no browser APIs), so this must live in an effect.
+    if (document.documentElement.dataset.skyIntro === "0") {
+      // The inline script in app/layout.tsx already decided to skip, and CSS has hidden
+      // the curtain since before first paint. These calls only sync React with the DOM,
+      // so they cannot cause a visible change.
       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowIntro(false);
       setHeroEntered(true);
       return;
     }
-    setShowIntro(true);
     const t = setTimeout(() => {
       setShowIntro(false);
       setHeroEntered(true);

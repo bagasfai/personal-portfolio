@@ -16,6 +16,7 @@ export default function IntroCurtain({ visible }: { visible: boolean }) {
   return (
     <motion.div
       key="curtain"
+      data-intro-curtain
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: INTRO_EXIT_S, ease: "easeInOut" }}
