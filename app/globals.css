@@ -21,3 +21,12 @@ body {
 html[data-sky-intro="0"] [data-intro-curtain] {
   display: none;
 }
+
+/* On the skip path the curtain is hidden, so the hero's server-rendered hidden variant
+   would otherwise show as a blank hero until hydration. `!important` is needed to beat
+   Motion's inline styles; it is safe to leave applied, because once `heroEntered` flips
+   true Motion animates these same elements to exactly opacity 1 / transform none. */
+html[data-sky-intro="0"] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
