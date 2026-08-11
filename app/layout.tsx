@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
 import {
@@ -40,11 +40,6 @@ export const metadata: Metadata = {
   title: "Bagaskara - Floating Sky Portfolio",
   description:
     "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   openGraph: {
     title: "Bagaskara - Floating Sky Portfolio",
     description:
@@ -87,6 +82,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Bagaskara", url: "https://bagaskara.com" }],
   creator: "Bagaskara",
   publisher: "Bagaskara",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
