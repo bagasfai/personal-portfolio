@@ -162,10 +162,8 @@ export interface AtmosphereDecor {
   leaves: Leaf[];
 }
 
-export function createAtmosphereDecor(
-  seed: number = ATMOSPHERE_SEED,
-): AtmosphereDecor {
-  const rng = mulberry32(seed);
+export function createAtmosphereDecor(): AtmosphereDecor {
+  const rng = mulberry32(ATMOSPHERE_SEED);
   const R = (a: number, b: number) => a + rng() * (b - a);
 
   const clouds: Cloud[] = [];
@@ -240,8 +238,8 @@ export interface LibraryDecor {
   lanterns: Lantern[];
 }
 
-export function createLibraryDecor(seed: number = LIBRARY_SEED): LibraryDecor {
-  const rng = mulberry32(seed);
+export function createLibraryDecor(): LibraryDecor {
+  const rng = mulberry32(LIBRARY_SEED);
   const R = (a: number, b: number) => a + rng() * (b - a);
 
   const papers: Paper[] = [];

@@ -52,6 +52,10 @@ export default function Hero({ entered }: { entered: boolean }) {
       >
         {/* text */}
         <div className="flex-[1_1_380px] min-w-75">
+          {/* data-reveal: app/globals.css forces opacity:1/transform:none !important on
+              these wrappers when data-sky-intro="0" (skip path). Any hover/scroll transform
+              added to a data-reveal element will work on first load but be silently dead
+              for repeat visitors and reduced-motion users. */}
           <motion.div
             variants={textVariants}
             data-reveal

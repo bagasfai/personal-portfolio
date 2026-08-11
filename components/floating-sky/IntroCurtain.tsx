@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { INTRO_EXIT_S, INTRO_LIFT_MS } from "./introTiming";
 
-export default function IntroCurtain({ visible }: { visible: boolean }) {
+export default function IntroCurtain() {
   const [lifting, setLifting] = useState(false);
 
   useEffect(() => {
-    if (!visible) return;
     const t = setTimeout(() => setLifting(true), INTRO_LIFT_MS);
     return () => clearTimeout(t);
-  }, [visible]);
+  }, []);
 
   return (
     <motion.div

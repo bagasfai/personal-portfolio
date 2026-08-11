@@ -94,7 +94,7 @@ export default function FloatingSky() {
       className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
     >
       <AnimatePresence>
-        {showIntro && <IntroCurtain visible={showIntro} />}
+        {showIntro && <IntroCurtain />}
       </AnimatePresence>
 
       <SkyProvider value={skyValue}>

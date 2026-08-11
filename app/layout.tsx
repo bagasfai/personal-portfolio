@@ -10,11 +10,11 @@ import {
 // decision is recorded before the browser paints. useEffect runs after paint and
 // useLayoutEffect runs after hydration — neither is early enough. See
 // node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
-const introSkipScript = `(function(){try{var s=sessionStorage.getItem(${JSON.stringify(
-  INTRO_STORAGE_KEY,
-)})==="1";var m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
+const introSkipScript = `(function(){var m=false;try{m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
   REDUCED_MOTION_QUERY,
-)}).matches);document.documentElement.dataset.skyIntro=(s||m)?"0":"1";}catch(e){}})();`;
+)}).matches);}catch(e){}var s=false;try{s=sessionStorage.getItem(${JSON.stringify(
+  INTRO_STORAGE_KEY,
+)})==="1";}catch(e){}document.documentElement.dataset.skyIntro=(s||m)?"0":"1";})();`;
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
