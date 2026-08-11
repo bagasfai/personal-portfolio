@@ -136,7 +136,23 @@ export interface NavItem {
   label: string;
 }
 
-const R = (a: number, b: number) => a + Math.random() * (b - a);
+// Deterministic PRNG. The route is statically prerendered, so decor generated with
+// Math.random() would be frozen at build time in the HTML but regenerated differently on
+// every client hydration — a guaranteed mismatch across ~190 elements. Seeding per call
+// (rather than once at module scope) keeps each generator's output independent of how
+// many times any other generator has run, so render order cannot desynchronize it.
+function mulberry32(seed: number) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const ATMOSPHERE_SEED = 0x5eed;
+const LIBRARY_SEED = 0xb00c;
 
 export interface AtmosphereDecor {
   clouds: Cloud[];
@@ -146,7 +162,12 @@ export interface AtmosphereDecor {
   leaves: Leaf[];
 }
 
-export function createAtmosphereDecor(): AtmosphereDecor {
+export function createAtmosphereDecor(
+  seed: number = ATMOSPHERE_SEED,
+): AtmosphereDecor {
+  const rng = mulberry32(seed);
+  const R = (a: number, b: number) => a + rng() * (b - a);
+
   const clouds: Cloud[] = [];
   for (let i = 0; i < 8; i++) {
     const w = R(230, 470);
@@ -219,7 +240,10 @@ export interface LibraryDecor {
   lanterns: Lantern[];
 }
 
-export function createLibraryDecor(): LibraryDecor {
+export function createLibraryDecor(seed: number = LIBRARY_SEED): LibraryDecor {
+  const rng = mulberry32(seed);
+  const R = (a: number, b: number) => a + rng() * (b - a);
+
   const papers: Paper[] = [];
   for (let i = 0; i < 7; i++) {
     const w = R(26, 44);
