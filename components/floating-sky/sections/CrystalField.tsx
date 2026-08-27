@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { m, motionValue, useAnimationFrame } from "motion/react";
 import { useSky } from "../SkyContext";
 import { getCrystals } from "@/content/crystals";
@@ -32,33 +32,52 @@ export default function CrystalField({
     [crystals],
   );
 
-  useEffect(() => {
-    const measure = () => {
-      crystals.forEach((_, i) => {
-        const el = nodeRefs.current[i];
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        centers.current[i] = {
-          ccx: r.left + r.width / 2,
-          ccy: r.top + r.height / 2,
-        };
-      });
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    window.addEventListener("scroll", measure, { passive: true });
-    return () => {
-      window.removeEventListener("resize", measure);
-      window.removeEventListener("scroll", measure);
-    };
+  // Centres are cached in *document* coordinates, so scrolling no longer invalidates
+  // them. The old code re-ran ten getBoundingClientRect() calls on every scroll event,
+  // which was the worst layout thrash in the codebase; the frame loop below converts to
+  // viewport coordinates with plain arithmetic instead.
+  const measure = useCallback(() => {
+    crystals.forEach((_, i) => {
+      const el = nodeRefs.current[i];
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      centers.current[i] = {
+        ccx: r.left + r.width / 2 + window.scrollX,
+        ccy: r.top + r.height / 2 + window.scrollY,
+      };
+    });
   }, [crystals]);
 
+  useEffect(() => {
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [measure]);
+
+  // Don't burn a frame budget on a section nobody is looking at.
+  const visibleRef = useRef(false);
+  useEffect(() => {
+    const el = nodeRefs.current[0]?.parentElement;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "10% 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useAnimationFrame(() => {
-    if (reducedMotion) return;
+    if (reducedMotion || !visibleRef.current) return;
     const pointerX = cx.get();
     const pointerY = cy.get();
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
     crystals.forEach((_, i) => {
-      const { ccx, ccy } = centers.current[i];
+      const ccx = centers.current[i].ccx - scrollX;
+      const ccy = centers.current[i].ccy - scrollY;
       let dx = 0;
       let dy = 0;
       if (pointerX !== 0 || pointerY !== 0) {

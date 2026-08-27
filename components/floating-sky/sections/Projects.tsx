@@ -33,9 +33,9 @@ function Tower({ p }: { p: Project }) {
                 "--badge-anim": `badgeOrbit ${b.dur} linear ${b.delay} infinite`,
               } as React.CSSProperties
             }
-            className="absolute left-1/2 top-1/2 animate-(--badge-anim)"
+            className="badge-orbit absolute left-1/2 top-1/2 animate-(--badge-anim)"
           >
-            <span className="inline-block -translate-x-1/2 -translate-y-1/2 py-1 px-2.5 rounded-full text-[11px] font-bold whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-sm shadow-[0_6px_16px_rgba(110,100,180,0.2)]">
+            <span className="inline-block -translate-x-1/2 -translate-y-1/2 py-1 px-2.5 rounded-full text-[11px] font-bold whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd) shadow-[0_6px_16px_rgba(110,100,180,0.2)]">
               {b.name}
             </span>
           </div>
@@ -63,7 +63,7 @@ function Tower({ p }: { p: Project }) {
             <span className="font-[family-name:var(--font-instrument-serif),serif] text-[44px] text-white opacity-90 [text-shadow:0_3px_12px_rgba(0,0,0,0.15)]">
               {p.glyph}
             </span>
-            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40 backdrop-blur-[6px]">
+            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40">
               {p.tag}
             </span>
             <span className="absolute top-3 right-3.5 text-[11px] font-semibold text-white opacity-85">

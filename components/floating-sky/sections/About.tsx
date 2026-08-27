@@ -75,7 +75,7 @@ export default function About() {
             ].map((chip) => (
               <span
                 key={chip}
-                className="py-2.25 px-4 rounded-full text-[13px] font-semibold text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-[10px]"
+                className="py-2.25 px-4 rounded-full text-[13px] font-semibold text-(--ink) bg-(--glass) border border-(--glass-brd)"
               >
                 {chip}
               </span>

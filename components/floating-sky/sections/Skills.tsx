@@ -78,7 +78,7 @@ export default function Skills() {
                 </div>
               </div>
 
-              <div className="absolute left-1/2 -bottom-1.5 -translate-x-1/2 py-1 px-2.75 rounded-full text-[11.5px] font-bold tracking-[0.2px] whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-sm">
+              <div className="absolute left-1/2 -bottom-1.5 -translate-x-1/2 py-1 px-2.75 rounded-full text-[11.5px] font-bold tracking-[0.2px] whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd)">
                 {k.name}
               </div>
 

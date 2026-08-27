@@ -10,7 +10,7 @@ import {
 import { SkyProvider } from "./SkyContext";
 import LazyMotionProvider from "./motion/LazyMotionProvider";
 import { useAmbientSound } from "./useAmbientSound";
-import Atmosphere from "./Atmosphere";
+import Atmosphere from "./atmosphere/Atmosphere";
 import Compass from "./Compass";
 import IntroCurtain from "./IntroCurtain";
 import {

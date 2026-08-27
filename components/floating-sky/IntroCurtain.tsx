@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { m } from "motion/react";
-import { INTRO_EXIT_S, INTRO_LIFT_MS } from "./introTiming";
+import { INTRO_BAR_S, INTRO_EXIT_S, INTRO_LIFT_MS } from "./introTiming";
 
 export default function IntroCurtain() {
   const [lifting, setLifting] = useState(false);
@@ -41,7 +41,7 @@ export default function IntroCurtain() {
           <m.div
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
-            transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: INTRO_BAR_S, ease: [0.4, 0, 0.2, 1] }}
             className="h-full rounded-[3px] bg-[linear-gradient(90deg,#9db4ff,#c9a6ff_55%,#ffb3c8)]"
           />
         </div>

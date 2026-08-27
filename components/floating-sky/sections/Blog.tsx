@@ -51,7 +51,7 @@ export default function Blog() {
                 <span className="absolute left-4 bottom-3 font-[family-name:var(--font-instrument-serif),serif] text-[34px] text-white opacity-90">
                   {a.glyph}
                 </span>
-                <span className="absolute top-3 right-3.5 py-1 px-2.5 rounded-full text-[10.5px] font-bold tracking-[0.4px] text-white bg-white/22 border border-white/40 backdrop-blur-[6px]">
+                <span className="absolute top-3 right-3.5 py-1 px-2.5 rounded-full text-[10.5px] font-bold tracking-[0.4px] text-white bg-white/22 border border-white/40">
                   {a.topic}
                 </span>
               </div>

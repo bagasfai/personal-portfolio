@@ -31,7 +31,7 @@ export default function LanternRow() {
                 "--ln-sway-anim": `lanternSway ${ln.sway} ease-in-out infinite`,
               } as React.CSSProperties
             }
-            className="origin-top animate-(--ln-sway-anim)"
+            className="lantern-sway origin-top animate-(--ln-sway-anim)"
           >
             <div
               style={{ "--ln-string": ln.string } as React.CSSProperties}
@@ -52,7 +52,7 @@ export default function LanternRow() {
                     "--ln-glow-anim": `lanternGlow ${ln.glow} ease-in-out infinite`,
                   } as React.CSSProperties
                 }
-                className="absolute inset-[-30%] rounded-full bg-[radial-gradient(circle,rgba(255,200,140,0.6),transparent_68%)] animate-(--ln-glow-anim)"
+                className="lantern-glow absolute inset-[-30%] rounded-full bg-[radial-gradient(circle,rgba(255,200,140,0.6),transparent_68%)] animate-(--ln-glow-anim)"
               />
               <div className="absolute left-1/2 -top-0.75 -translate-x-1/2 w-[44%] h-1.25 rounded-[3px] bg-[#e8895f]" />
             </div>

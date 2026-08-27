@@ -26,7 +26,7 @@ export default function LeafFall() {
               "--leaf-anim": `leafFall ${l.dur} ease-in-out ${l.delay} infinite`,
             } as React.CSSProperties
           }
-          className="absolute left-(--leaf-left) top-(--leaf-top) w-(--leaf-w) h-(--leaf-h) bg-(image:--leaf-bg) rounded-[0_82%_30%_82%] opacity-55 animate-(--leaf-anim) pointer-events-none"
+          className="leaf absolute left-(--leaf-left) top-(--leaf-top) w-(--leaf-w) h-(--leaf-h) bg-(image:--leaf-bg) rounded-[0_82%_30%_82%] opacity-55 animate-(--leaf-anim) pointer-events-none"
         />
       ))}
     </>

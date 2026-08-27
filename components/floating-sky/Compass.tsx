@@ -69,16 +69,17 @@ export default function Compass({
   return (
     <m.nav
       id="compass"
-      animate={{
-        scale: compact ? 0.93 : 1,
-        padding: compact ? "5px 7px" : "7px 9px",
-        boxShadow: compact
-          ? "0 10px 30px rgba(70,66,120,.24)"
-          : "0 12px 34px rgba(70,66,120,.16)",
-      }}
+      // Only `scale` is animated per frame now. Padding was animating layout and the
+      // shadow was animating paint, 0.55s of both on every scroll past 70px; the
+      // padding is fixed and the shadow swaps by class with a plain CSS transition.
+      animate={{ scale: compact ? 0.93 : 1 }}
       transition={{ duration: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
       style={{ x: "-50%" }}
-      className="fixed top-5 left-1/2 z-60 flex items-center gap-1 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-[20px] backdrop-saturate-[1.35] max-w-[94vw] [transition:background_.8s_ease,border-color_.8s_ease]"
+      className={`fixed top-5 left-1/2 z-60 flex items-center gap-1 rounded-full py-[7px] px-[9px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[20px] backdrop-saturate-[1.35] max-w-[94vw] [transition:background_.8s_ease,border-color_.8s_ease,box-shadow_.55s_ease] ${
+        compact
+          ? "shadow-[0_10px_30px_rgba(70,66,120,.24)]"
+          : "shadow-[0_12px_34px_rgba(70,66,120,.16)]"
+      }`}
     >
       <span className="font-[family-name:var(--font-caveat),cursive] font-bold text-[22px] leading-none pr-2.5 pl-2 text-(--ink) whitespace-nowrap">
         ✦&nbsp;Bagaskara

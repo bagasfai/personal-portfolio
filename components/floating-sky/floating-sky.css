@@ -405,3 +405,72 @@ html {
 [data-step-stone].is-lit .step-halo {
   opacity: 0.8;
 }
+
+/* ---------------------------------------------------------------------------
+   Animation cost policy.
+
+   useReducedMotion() gated Motion, but all 25 CSS keyframes ignored the
+   preference entirely — an accessibility defect as much as a performance one.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  /* Decorative, infinite, purely atmospheric — stop entirely. */
+  .cloud,
+  .mote,
+  .star,
+  .bird,
+  .bird-wing,
+  .leaf,
+  .paper,
+  .blob,
+  .grain,
+  .rays,
+  .crystal-gem,
+  .lantern-sway,
+  .lantern-glow,
+  .badge-orbit {
+    animation: none !important;
+  }
+
+  /* Structural float animations — hold at rest rather than removing, so the
+     elements settle at their first keyframe and layout positions stay identical
+     to the animated case. */
+  [class*="animate-"] {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* 70 stars run `twinkle` forever at opacity 0 in daylight. Composes with the
+   data-theme attribute, so the DOM is untouched and hydration is unaffected. */
+html[data-theme="day"] .star {
+  animation-play-state: paused;
+}
+
+/* Density on small screens. Generating fewer elements would desynchronise the
+   client PRNG from the prerendered HTML — the exact mismatch the seeded
+   generator exists to prevent — so hide the surplus instead. */
+@media (max-width: 720px) {
+  .star:nth-child(n + 31) {
+    display: none;
+  }
+  .mote:nth-child(n + 21) {
+    display: none;
+  }
+  .cloud:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+/* will-change buys a GPU layer; holding one per crystal permanently costs memory
+   whether or not anything is moving. Scope it to the moment it matters. */
+.crystal {
+  will-change: auto;
+}
+.crystal:hover,
+.crystal:focus-within {
+  will-change: transform;
+}
