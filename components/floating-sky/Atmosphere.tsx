@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useTransform } from "motion/react";
+import { m, useTransform } from "motion/react";
 import { useSky } from "./SkyContext";
 import { useParallax } from "./useParallax";
 import type { Cloud, Particle, Star, Bird } from "@/lib/types";
@@ -25,7 +25,7 @@ function Blob({
 }) {
   const { x, y } = useParallax(factor);
   return (
-    <motion.div className={`absolute ${className}`} style={{ x, y }}>
+    <m.div className={`absolute ${className}`} style={{ x, y }}>
       <div
         style={
           {
@@ -38,7 +38,7 @@ function Blob({
         }
         className="w-full h-full rounded-full bg-[radial-gradient(closest-side,var(--blob-color),transparent_70%)] blur-(--blob-blur) opacity-(--blob-opacity) animate-(--blob-anim) [animation-delay:var(--blob-delay)]"
       />
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -55,7 +55,7 @@ function CursorGlow() {
     ([x, y]: number[]) => `translate3d(${x}px, ${y}px, 0)`,
   );
   return (
-    <motion.div
+    <m.div
       id="cursorglow"
       style={{ transform }}
       className={`absolute left-0 top-0 w-140 h-140 -mt-70 -ml-70 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.5),transparent_62%)] mix-blend-soft-light will-change-transform [transition:opacity_.7s_ease] ${

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  motion,
+  m,
   motionValue,
   useAnimationFrame,
   type MotionValue,
@@ -31,7 +31,7 @@ function CrystalItem({
   const gemRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <motion.div
+    <m.div
       ref={nodeRef}
       style={
         {
@@ -97,7 +97,7 @@ function CrystalItem({
           {k.name}
         </div>
 
-        <motion.div
+        <m.div
           animate={hovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
           transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
           style={{ x: "-50%" }}
@@ -122,9 +122,9 @@ function CrystalItem({
           <p className="m-0 text-[13px] leading-[1.55] text-(--ink-soft) text-pretty">
             {k.desc}
           </p>
-        </motion.div>
+        </m.div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -194,7 +194,7 @@ export default function Skills() {
       data-screen-label="Workshop"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-32.5"
     >
-      <motion.div
+      <m.div
         variants={revealVariants}
         initial="hidden"
         whileInView="show"
@@ -211,7 +211,7 @@ export default function Skills() {
           Each crystal holds a craft. Drift your cursor near — they&apos;ll shy
           away — and rest on one to hear its story.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="relative w-full max-w-250 min-h-140 mt-5 flex items-center justify-center">
         <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-85 h-37.5 animate-[anvilFloat_9s_ease-in-out_infinite] pointer-events-none">

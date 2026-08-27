@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { m, useScroll, useMotionValueEvent } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { getSteps } from "@/content/steps";
 import type { Step } from "@/lib/types";
@@ -43,12 +43,12 @@ function StepNode({ s, index }: { s: Step; index: number }) {
           }
           className="relative w-14 h-14 animate-(--stone-anim)"
         >
-          <motion.div
+          <m.div
             animate={{ opacity: lit ? 0.8 : 0 }}
             transition={{ duration: 0.6 }}
             className="absolute inset-[-40%] rounded-full bg-[radial-gradient(circle,#c9a6ff,transparent_66%)] animate-[haloPulse_3.5s_ease-in-out_infinite] pointer-events-none"
           />
-          <motion.div
+          <m.div
             className="step-stone absolute inset-0 rounded-full border-[1.5px] border-(--glass-brd) backdrop-blur-[10px] flex items-center justify-center text-[19px]"
             animate={{
               background: lit ? LIT_GRADIENT : "var(--glass)",
@@ -57,11 +57,11 @@ function StepNode({ s, index }: { s: Step; index: number }) {
             transition={{ duration: 0.6 }}
           >
             {s.glyph}
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
-      <motion.div
+      <m.div
         className="step-card w-[calc(50%-60px)] py-5.5 px-6 rounded-3xl bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_22px_48px_rgba(110,100,180,0.22),inset_0_1px_0_rgba(255,255,255,0.55)]"
         custom={index}
         variants={revealVariants}
@@ -97,7 +97,7 @@ function StepNode({ s, index }: { s: Step; index: number }) {
             </span>
           ))}
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -117,7 +117,7 @@ export default function Path() {
       data-screen-label="My Journey"
       className="relative z-2 min-h-screen flex flex-col items-center pt-32.5 px-[6vw] pb-37.5"
     >
-      <motion.div
+      <m.div
         variants={revealVariants}
         initial="hidden"
         whileInView="show"
@@ -134,7 +134,7 @@ export default function Path() {
           Each stone is a chapter, suspended in the sky. As you drift downward,
           the ones behind you light up — the trail you&apos;ve already walked.
         </p>
-      </motion.div>
+      </m.div>
 
       <div
         id="pathwrap"
@@ -142,7 +142,7 @@ export default function Path() {
         className="relative w-full max-w-225"
       >
         <div className="absolute left-1/2 top-2 bottom-2 w-0.75 -translate-x-1/2 rounded-[3px] bg-(--glass-brd) overflow-hidden">
-          <motion.div
+          <m.div
             id="pathfill"
             style={{ scaleY: pathP }}
             className="absolute left-0 top-0 w-full h-full origin-top bg-[linear-gradient(180deg,#9db4ff,#c9a6ff_55%,#ffb3c8)] shadow-[0_0_12px_rgba(180,160,255,0.7)]"

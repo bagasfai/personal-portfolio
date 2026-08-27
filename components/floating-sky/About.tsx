@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { m, useMotionValue, useSpring } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { createLeaves } from "@/lib/decor";
 
@@ -71,7 +71,7 @@ export default function About() {
       ))}
 
       <div className="w-full max-w-270 flex flex-wrap items-center justify-center gap-15">
-        <motion.div
+        <m.div
           variants={revealVariants}
           custom={0}
           initial="hidden"
@@ -85,7 +85,7 @@ export default function About() {
               onPointerMove={handlePointerMove}
               onPointerLeave={handlePointerLeave}
             >
-              <motion.div
+              <m.div
                 style={{ rotateX: springX, rotateY: springY }}
                 className="rounded-[34px] p-4 bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_30px_60px_rgba(120,110,190,0.28),inset_0_1px_0_rgba(255,255,255,0.6)]"
               >
@@ -100,12 +100,12 @@ export default function About() {
                     above the clouds
                   </span>
                 </div>
-              </motion.div>
+              </m.div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           variants={revealVariants}
           custom={1}
           initial="hidden"
@@ -146,7 +146,7 @@ export default function About() {
               </span>
             ))}
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

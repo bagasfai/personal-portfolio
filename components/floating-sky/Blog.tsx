@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { createPapers } from "@/lib/decor";
 import { getArticles } from "@/content/articles";
@@ -33,7 +33,7 @@ export default function Blog() {
         />
       ))}
 
-      <motion.div
+      <m.div
         variants={revealVariants}
         initial="hidden"
         whileInView="show"
@@ -50,12 +50,12 @@ export default function Blog() {
           A quiet reading room in the sky. Notes on building calm software, and
           the small things I learn along the way.
         </p>
-      </motion.div>
+      </m.div>
 
       <div className="relative w-full max-w-250">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6.5">
           {articles.map((a, i) => (
-            <motion.article
+            <m.article
               key={a.title}
               custom={i}
               variants={revealVariants}
@@ -104,7 +104,7 @@ export default function Blog() {
                   Read →
                 </span>
               </div>
-            </motion.article>
+            </m.article>
           ))}
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { useParallax } from "./useParallax";
 import { EASE_REVEAL } from "./motionVariants";
 
@@ -45,7 +45,7 @@ export default function Hero({ entered }: { entered: boolean }) {
       data-screen-label="Hero"
       className="relative z-2 min-h-screen flex items-center justify-center pt-30 px-[7vw] pb-20"
     >
-      <motion.div
+      <m.div
         variants={containerVariants}
         initial="hidden"
         animate={entered ? "show" : "hidden"}
@@ -57,24 +57,24 @@ export default function Hero({ entered }: { entered: boolean }) {
               these wrappers when data-sky-intro="0" (skip path). Any hover/scroll transform
               added to a data-reveal element will work on first load but be silently dead
               for repeat visitors and reduced-motion users. */}
-          <motion.div
+          <m.div
             variants={textVariants}
             data-reveal
             className="inline-flex items-center gap-2.25 py-1.75 px-3.75 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-md text-[12.5px] font-semibold tracking-[0.4px] text-(--ink-soft) mb-6.5"
           >
             <span className="w-1.75 h-1.75 rounded-full bg-[#8fd6a8] shadow-[0_0_8px_#8fd6a8] animate-[twinkle_3s_ease-in-out_infinite]" />
             FULL-STACK DEVELOPER · BUILDING ABOVE THE CLOUDS
-          </motion.div>
+          </m.div>
 
-          <motion.p
+          <m.p
             variants={textVariants}
             data-reveal
             className="mb-1.5 font-[family-name:var(--font-caveat),cursive] text-[28px] font-semibold text-(--ink-soft)"
           >
             Hi, I&apos;m Bagaskara —
-          </motion.p>
+          </m.p>
 
-          <motion.h1 id="hero-heading"
+          <m.h1 id="hero-heading"
             variants={textVariants}
             data-reveal
             className="m-0 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(46px,7vw,88px)] leading-[1.02] tracking-[-0.5px] text-(--ink) text-balance"
@@ -85,23 +85,23 @@ export default function Hero({ entered }: { entered: boolean }) {
             </em>
             , thoughtful software, somewhere{" "}
             <em className="italic">above&nbsp;the&nbsp;clouds.</em>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             variants={textVariants}
             data-reveal
             className="mt-6.5 max-w-110 text-[17px] leading-[1.7] font-normal text-(--ink-soft) text-pretty"
           >
             A developer who cares about the quiet details — the ones you feel
             before you notice. Come drift through a few things I&apos;ve made.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             variants={textVariants}
             data-reveal
             className="flex flex-wrap gap-3.5 mt-8.5"
           >
-            <motion.a
+            <m.a
               href="#my-story"
               whileHover={{ y: -3, scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
@@ -109,8 +109,8 @@ export default function Hero({ entered }: { entered: boolean }) {
               className="inline-flex items-center gap-2.5 py-3.75 px-6.75 rounded-full no-underline font-semibold text-[15px] text-white bg-[linear-gradient(135deg,#9db4ff,#c9a6ff_55%,#ffb3c8)] shadow-[0_14px_32px_rgba(150,140,225,0.4),inset_0_1px_0_rgba(255,255,255,0.5)]"
             >
               Wander my work&nbsp;<span className="text-[17px]">→</span>
-            </motion.a>
-            <motion.a
+            </m.a>
+            <m.a
               href="#horizon"
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.98 }}
@@ -118,10 +118,10 @@ export default function Hero({ entered }: { entered: boolean }) {
               className="inline-flex items-center gap-2 py-3.75 px-6.5 rounded-full no-underline font-semibold text-[15px] text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-md"
             >
               Say hello
-            </motion.a>
-          </motion.div>
+            </m.a>
+          </m.div>
 
-          <motion.div
+          <m.div
             variants={textVariants}
             data-reveal
             className="flex items-center gap-2.5 mt-11 text-(--ink-soft) text-[12.5px] tracking-[0.5px] font-medium"
@@ -130,16 +130,16 @@ export default function Hero({ entered }: { entered: boolean }) {
               <span className="absolute left-1/2 top-1.75 -translate-x-1/2 w-0.75 h-1.75 rounded-xs bg-(--ink-soft) animate-[bob_1.8s_ease-in-out_infinite]" />
             </span>
             KEEP DRIFTING
-          </motion.div>
+          </m.div>
         </div>
 
         {/* floating island + avatar */}
-        <motion.div
+        <m.div
           variants={islandVariants}
           data-reveal
           className="flex-[0_1_440px] min-w-75 h-120 relative"
         >
-          <motion.div
+          <m.div
             style={{ x: island.x, y: island.y }}
             className="absolute inset-0"
           >
@@ -171,10 +171,10 @@ export default function Hero({ entered }: { entered: boolean }) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* companion island */}
-          <motion.div
+          <m.div
             style={{ x: companion.x, y: companion.y }}
             className="absolute left-[-4%] bottom-[8%] w-22.5 h-17.5"
           >
@@ -182,9 +182,9 @@ export default function Hero({ entered }: { entered: boolean }) {
               <div className="absolute left-1/2 top-6.5 -translate-x-1/2 w-16 h-15 bg-[linear-gradient(180deg,var(--rock1),var(--rock2))] [clip-path:polygon(6%_0,94%_0,72%_60%,50%_100%,28%_60%)] rounded-t-[40%]" />
               <div className="absolute left-1/2 top-3.5 -translate-x-1/2 w-20.5 h-8 rounded-full bg-[linear-gradient(180deg,var(--grass1),var(--grass2))]" />
             </div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </m.div>
+        </m.div>
+      </m.div>
     </section>
   );
 }

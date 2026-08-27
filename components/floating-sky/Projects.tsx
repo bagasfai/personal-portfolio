@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "motion/react";
+import { m } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { getProjects } from "@/content/projects";
 import type { Project } from "@/lib/types";
@@ -10,7 +10,7 @@ function Tower({ p }: { p: Project }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <motion.div
+    <m.div
       className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
       custom={p.i}
       variants={revealVariants}
@@ -28,7 +28,7 @@ function Tower({ p }: { p: Project }) {
         } as React.CSSProperties
       }
     >
-      <motion.div
+      <m.div
         animate={{ opacity: hovered ? 1 : 0 }}
         transition={{ duration: 0.55 }}
         style={
@@ -40,7 +40,7 @@ function Tower({ p }: { p: Project }) {
         className="absolute left-1/2 -bottom-6.5 w-[78%] h-15 rounded-full pointer-events-none blur-xs bg-(image:--glow-bg)"
       />
 
-      <motion.div
+      <m.div
         animate={{ opacity: hovered ? 1 : 0 }}
         transition={{ duration: 0.5 }}
         className="absolute inset-0 pointer-events-none z-6"
@@ -61,7 +61,7 @@ function Tower({ p }: { p: Project }) {
             </span>
           </div>
         ))}
-      </motion.div>
+      </m.div>
 
       <div
         style={
@@ -98,7 +98,7 @@ function Tower({ p }: { p: Project }) {
             <p className="mb-4.5 text-sm leading-[1.6] text-(--ink-soft) min-h-16.5 text-pretty">
               {p.desc}
             </p>
-            <motion.div
+            <m.div
               animate={hovered ? { opacity: 1, y: 0 } : { opacity: 0.55, y: 6 }}
               transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
               className="flex gap-2.5"
@@ -129,7 +129,7 @@ function Tower({ p }: { p: Project }) {
                   GitHub
                 </a>
               )}
-            </motion.div>
+            </m.div>
           </div>
         </div>
         <div className="relative h-11 -mt-0.5">
@@ -137,7 +137,7 @@ function Tower({ p }: { p: Project }) {
           <div className="absolute left-1/2 -top-1.25 -translate-x-1/2 w-[74%] h-4 rounded-full bg-[linear-gradient(180deg,var(--grass1),var(--grass2))]" />
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -151,7 +151,7 @@ export default function Projects() {
       data-screen-label="Creations"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-37.5"
     >
-      <motion.div
+      <m.div
         variants={revealVariants}
         initial="hidden"
         whileInView="show"
@@ -168,7 +168,7 @@ export default function Projects() {
           Every tower is a project, moored to its own scrap of land. Hover to
           raise one into the light and see it up close.
         </p>
-      </motion.div>
+      </m.div>
 
       <div
         id="city"

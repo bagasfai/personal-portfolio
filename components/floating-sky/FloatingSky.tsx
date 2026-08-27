@@ -8,6 +8,7 @@ import {
   useSpring,
 } from "motion/react";
 import { SkyProvider } from "./SkyContext";
+import LazyMotionProvider from "./motion/LazyMotionProvider";
 import { useAmbientSound } from "./useAmbientSound";
 import Atmosphere from "./Atmosphere";
 import Compass from "./Compass";
@@ -97,27 +98,27 @@ export default function FloatingSky() {
   );
 
   return (
-    <div
-      className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
-    >
-      <AnimatePresence>
-        {showIntro && <IntroCurtain />}
-      </AnimatePresence>
+    <LazyMotionProvider>
+      <div className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]">
+        <AnimatePresence>
+          {showIntro && <IntroCurtain />}
+        </AnimatePresence>
 
-      <SkyProvider value={skyValue}>
-        <Atmosphere decor={decor} />
-        <Compass soundOn={soundOn} toggleSound={toggleSound} />
-        <main id="content">
-          <Hero entered={heroEntered} />
-          <About />
-          <Skills />
-          <Projects />
-          <Path />
-          <Blog />
-          <Contact />
-        </main>
-      </SkyProvider>
-      <Footer />
-    </div>
+        <SkyProvider value={skyValue}>
+          <Atmosphere decor={decor} />
+          <Compass soundOn={soundOn} toggleSound={toggleSound} />
+          <main id="content">
+            <Hero entered={heroEntered} />
+            <About />
+            <Skills />
+            <Projects />
+            <Path />
+            <Blog />
+            <Contact />
+          </main>
+        </SkyProvider>
+        <Footer />
+      </div>
+    </LazyMotionProvider>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "motion/react";
+import { m, useScroll, useMotionValueEvent } from "motion/react";
 import { NAV_ITEMS } from "@/content/nav";
 import { applyTheme, type ThemeName } from "@/lib/theme";
 
@@ -67,7 +67,7 @@ export default function Compass({
   }, []);
 
   return (
-    <motion.nav
+    <m.nav
       id="compass"
       animate={{
         scale: compact ? 0.93 : 1,
@@ -86,7 +86,7 @@ export default function Compass({
       <span className="w-px h-4.5 bg-(--glass-brd) mx-1" />
 
       {NAV_ITEMS.map((n) => (
-        <motion.a
+        <m.a
           key={n.id}
           href={`#${n.id}`}
           aria-current={active === n.id ? "true" : undefined}
@@ -98,7 +98,7 @@ export default function Compass({
           }`}
         >
           {n.label}
-        </motion.a>
+        </m.a>
       ))}
 
       <button
@@ -122,7 +122,7 @@ export default function Compass({
         </span>
       </button>
 
-      <motion.button
+      <m.button
         onClick={toggleTheme}
         title="Shift the sky"
         aria-label={
@@ -133,7 +133,7 @@ export default function Compass({
         className="w-8.5 h-8.5 border-0 rounded-full cursor-pointer text-[15px] flex items-center justify-center text-(--ink) bg-(--glass-brd)"
       >
         {theme === "night" ? "☀" : "☾"}
-      </motion.button>
-    </motion.nav>
+      </m.button>
+    </m.nav>
   );
 }

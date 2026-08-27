@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { m, AnimatePresence } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { createLanterns } from "@/lib/decor";
 
@@ -71,7 +71,7 @@ export default function Contact() {
       ))}
 
       <div className="relative z-3 w-full max-w-230 flex flex-wrap items-center gap-12.5 justify-center">
-        <motion.div
+        <m.div
           variants={revealVariants}
           custom={0}
           initial="hidden"
@@ -106,9 +106,9 @@ export default function Contact() {
               GitHub
             </a>
           </div>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           variants={revealVariants}
           custom={1}
           initial="hidden"
@@ -120,7 +120,7 @@ export default function Contact() {
             <div className="pt-7 px-7 pb-6.5 rounded-[30px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[20px] backdrop-saturate-[1.3] shadow-[0_30px_64px_rgba(110,100,180,0.28),inset_0_1px_0_rgba(255,255,255,0.6)] overflow-hidden">
               <AnimatePresence mode="wait" initial={false}>
                 {sent ? (
-                  <motion.div
+                  <m.div
                     key="sent"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -135,9 +135,9 @@ export default function Contact() {
                     <p className="text-[14.5px] leading-[1.6] text-(--ink-soft)">
                       Thank you — I&apos;ll drift back to you soon.
                     </p>
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.form
+                  <m.form
                     key="form"
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -199,7 +199,7 @@ export default function Contact() {
                       placeholder="What shall we build?"
                       className={`sky-field ${fieldBase} mb-5 resize-y`}
                     />
-                    <motion.button
+                    <m.button
                       type="submit"
                       whileHover={{
                         y: -2,
@@ -210,13 +210,13 @@ export default function Contact() {
                       className="w-full p-3.75 border-0 rounded-[14px] cursor-pointer font-[family-name:var(--font-manrope),sans-serif] text-[15px] font-bold text-white bg-[linear-gradient(135deg,#9db4ff,#c9a6ff_55%,#ffb3c8)] shadow-[0_14px_30px_rgba(150,140,225,0.4),inset_0_1px_0_rgba(255,255,255,0.5)]"
                     >
                       Send it into the sky →
-                    </motion.button>
-                  </motion.form>
+                    </m.button>
+                  </m.form>
                 )}
               </AnimatePresence>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
