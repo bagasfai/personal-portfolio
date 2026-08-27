@@ -1,26 +1,18 @@
-"use client";
-
-import { useMemo } from "react";
-import { m } from "motion/react";
-import { revealVariants, revealViewport } from "./motionVariants";
+import Reveal from "../motion/Reveal";
 import { getProjects } from "@/content/projects";
 import type { Project } from "@/lib/types";
 
 function Tower({ p }: { p: Project }) {
   return (
-    <m.div
-      className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
+    <Reveal
       custom={p.i}
-      variants={revealVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={revealViewport}
       style={
         {
           "--tower-align": p.align,
           "--tower-lift": p.lift,
         } as React.CSSProperties
       }
+      className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
     >
       <div
         style={
@@ -120,12 +112,12 @@ function Tower({ p }: { p: Project }) {
           <div className="absolute left-1/2 -top-1.25 -translate-x-1/2 w-[74%] h-4 rounded-full bg-[linear-gradient(180deg,var(--grass1),var(--grass2))]" />
         </div>
       </div>
-    </m.div>
+    </Reveal>
   );
 }
 
 export default function Projects() {
-  const projects = useMemo(() => getProjects(), []);
+  const projects = getProjects();
 
   return (
     <section
@@ -134,24 +126,21 @@ export default function Projects() {
       data-screen-label="Creations"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-37.5"
     >
-      <m.div
-        variants={revealVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={revealViewport}
-        className="text-center max-w-165 mb-14"
-      >
+      <Reveal className="text-center max-w-165 mb-14">
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the floating city
         </p>
-        <h2 id="creations-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2
+          id="creations-heading"
+          className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance"
+        >
           A skyline of things I&apos;ve <em className="italic">built.</em>
         </h2>
         <p className="mx-auto max-w-115 text-base leading-[1.7] text-(--ink-soft) text-pretty">
           Every tower is a project, moored to its own scrap of land. Hover to
           raise one into the light and see it up close.
         </p>
-      </m.div>
+      </Reveal>
 
       <div
         id="city"

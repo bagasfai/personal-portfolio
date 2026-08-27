@@ -13,14 +13,6 @@ import { useAmbientSound } from "./useAmbientSound";
 import Atmosphere from "./Atmosphere";
 import Compass from "./Compass";
 import IntroCurtain from "./IntroCurtain";
-import Hero from "./Hero";
-import About from "./About";
-import Skills from "./Skills";
-import Projects from "./Projects";
-import Path from "./Path";
-import Blog from "./Blog";
-import Contact from "./Contact";
-import Footer from "./Footer";
 import {
   createClouds,
   createParticles,
@@ -30,7 +22,11 @@ import {
 import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
-export default function FloatingSky() {
+export default function FloatingSky({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const decor = useMemo(
     () => ({
       clouds: createClouds(),
@@ -93,8 +89,15 @@ export default function FloatingSky() {
   }, []);
 
   const skyValue = useMemo(
-    () => ({ sx, sy, cx, cy, reducedMotion: Boolean(prefersReduced) }),
-    [sx, sy, cx, cy, prefersReduced],
+    () => ({
+      sx,
+      sy,
+      cx,
+      cy,
+      reducedMotion: Boolean(prefersReduced),
+      entered: heroEntered,
+    }),
+    [sx, sy, cx, cy, prefersReduced, heroEntered],
   );
 
   return (
@@ -107,17 +110,8 @@ export default function FloatingSky() {
         <SkyProvider value={skyValue}>
           <Atmosphere decor={decor} />
           <Compass soundOn={soundOn} toggleSound={toggleSound} />
-          <main id="content">
-            <Hero entered={heroEntered} />
-            <About />
-            <Skills />
-            <Projects />
-            <Path />
-            <Blog />
-            <Contact />
-          </main>
+          {children}
         </SkyProvider>
-        <Footer />
       </div>
     </LazyMotionProvider>
   );

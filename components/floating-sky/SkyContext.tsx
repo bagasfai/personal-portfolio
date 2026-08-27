@@ -11,6 +11,8 @@ export interface SkyContextValue {
   cx: MotionValue<number>;
   cy: MotionValue<number>;
   reducedMotion: boolean;
+  /** True once the intro curtain has lifted, or immediately on the skip path. */
+  entered: boolean;
 }
 
 const SkyContext = createContext<SkyContextValue | null>(null);

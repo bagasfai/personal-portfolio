@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { m, useTransform } from "motion/react";
 import { useSky } from "./SkyContext";
-import { useParallax } from "./useParallax";
+import { useParallax } from "./motion/useParallax";
 import type { Cloud, Particle, Star, Bird } from "@/lib/types";
 
 function Blob({

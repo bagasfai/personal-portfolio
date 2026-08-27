@@ -370,3 +370,38 @@ html {
   transform: translateY(-4px) !important;
   box-shadow: 0 30px 60px rgba(110, 100, 180, 0.32);
 }
+
+/* ---------------------------------------------------------------------------
+   Step stones.
+
+   These used to be two Motion `animate` props per stone, driven by a `lit` state
+   that each stone derived from its own scrollY subscription and a
+   getBoundingClientRect() call — N forced layouts per scroll frame. PathTrail now
+   toggles `.is-lit` from a single IntersectionObserver and the appearance is CSS.
+
+   Note the background does not interpolate: a colour cannot transition to a
+   gradient. It snaps, exactly as the Motion version did — that mismatch is what
+   made Motion log "is not an animatable color" on every step.
+   --------------------------------------------------------------------------- */
+.step-stone {
+  background: var(--glass);
+  box-shadow:
+    0 12px 26px rgba(110, 100, 180, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    background 0.6s ease,
+    box-shadow 0.6s ease;
+}
+[data-step-stone].is-lit .step-stone {
+  background: linear-gradient(135deg, #b9c6ff, #d9bcff 55%, #ffc6d8);
+  box-shadow:
+    0 12px 30px rgba(150, 130, 230, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.step-halo {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+[data-step-stone].is-lit .step-halo {
+  opacity: 0.8;
+}
