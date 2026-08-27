@@ -39,15 +39,19 @@ export default function Skills() {
             positions them and drives the repel; everything inside is plain markup. */}
         <CrystalField>
           {crystals.map((k) => (
-            <div
+            // A real button rather than a div with tabIndex: this is the control that
+            // reveals the crystal's tooltip, so it should be focusable for the same
+            // reason it is hoverable, and announce itself as something you can act on.
+            <button
               key={k.name}
-              tabIndex={0}
+              type="button"
+              aria-describedby={`crystal-tip-${k.i}`}
               style={
                 {
                   "--k-bob-anim": `floatC ${k.bob} ease-in-out ${k.delay} infinite`,
                 } as React.CSSProperties
               }
-              className="relative w-full h-full cursor-default transform-3d animate-(--k-bob-anim)"
+              className="block relative w-full h-full p-0 border-0 bg-transparent text-left cursor-default transform-3d animate-(--k-bob-anim)"
             >
               <div
                 style={
@@ -82,7 +86,9 @@ export default function Skills() {
                 {k.name}
               </div>
 
-              <div className="crystal-tip absolute left-1/2 bottom-[calc(100%+14px)] w-53 py-3.75 px-4.25 rounded-[20px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.3] shadow-[0_22px_50px_rgba(110,100,180,0.3)] pointer-events-none z-20">
+              <div
+                id={`crystal-tip-${k.i}`}
+                className="crystal-tip absolute left-1/2 bottom-[calc(100%+14px)] w-53 py-3.75 px-4.25 rounded-[20px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.3] shadow-[0_22px_50px_rgba(110,100,180,0.3)] pointer-events-none z-20">
                 <div className="flex items-center justify-between mb-1.75">
                   <span className="font-[family-name:var(--font-instrument-serif),serif] text-xl text-(--ink)">
                     {k.name}
@@ -103,7 +109,7 @@ export default function Skills() {
                   {k.desc}
                 </p>
               </div>
-            </div>
+            </button>
           ))}
         </CrystalField>
       </div>
