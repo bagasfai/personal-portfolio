@@ -5,16 +5,21 @@ import {
   INTRO_STORAGE_KEY,
   REDUCED_MOTION_QUERY,
 } from "@/components/floating-sky/introTiming";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 
-// Runs synchronously during HTML parsing, before any body content is parsed, so the
-// decision is recorded before the browser paints. useEffect runs after paint and
+// Runs synchronously during HTML parsing, before any body content is parsed, so both
+// decisions are recorded before the browser paints. useEffect runs after paint and
 // useLayoutEffect runs after hydration — neither is early enough. See
 // node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
-const introSkipScript = `(function(){var m=false;try{m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
+// One blocking script rather than two: the intro decision and the theme decision want
+// exactly the same timing, so there is nothing to gain by splitting them.
+const prePaintScript = `(function(){var m=false;try{m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
   REDUCED_MOTION_QUERY,
 )}).matches);}catch(e){}var s=false;try{s=sessionStorage.getItem(${JSON.stringify(
   INTRO_STORAGE_KEY,
-)})==="1";}catch(e){}document.documentElement.dataset.skyIntro=(s||m)?"0":"1";})();`;
+)})==="1";}catch(e){}document.documentElement.dataset.skyIntro=(s||m)?"0":"1";var t=null;try{t=localStorage.getItem(${JSON.stringify(
+  THEME_STORAGE_KEY,
+)});}catch(e){}if(t!=="day"&&t!=="night"){t="day";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)t="night";}catch(e){}}document.documentElement.dataset.theme=t;})();`;
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -93,11 +98,12 @@ export default function RootLayout({
     <html
       lang="en"
       data-sky-intro="1"
+      data-theme="day"
       suppressHydrationWarning
       className={`${instrumentSerif.variable} ${manrope.variable} ${caveat.variable}`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: introSkipScript }} />
+        <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
         <noscript>
           <style>{`[data-intro-curtain]{display:none}[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>

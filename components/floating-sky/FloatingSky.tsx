@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   AnimatePresence,
   useMotionValue,
@@ -26,7 +26,6 @@ import {
   createStars,
   createBirds,
 } from "@/lib/decor";
-import { THEME_DAY, THEME_NIGHT } from "@/lib/theme-tokens";
 import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
@@ -41,9 +40,6 @@ export default function FloatingSky() {
     [],
   );
   const prefersReduced = useReducedMotion();
-
-  const [night, setNight] = useState(false);
-  const toggleNight = useCallback(() => setNight((n) => !n), []);
 
   const { soundOn, toggleSound } = useAmbientSound();
 
@@ -96,15 +92,12 @@ export default function FloatingSky() {
   }, []);
 
   const skyValue = useMemo(
-    () => ({ sx, sy, cx, cy, night, reducedMotion: Boolean(prefersReduced) }),
-    [sx, sy, cx, cy, night, prefersReduced],
+    () => ({ sx, sy, cx, cy, reducedMotion: Boolean(prefersReduced) }),
+    [sx, sy, cx, cy, prefersReduced],
   );
-
-  const theme = night ? THEME_NIGHT : THEME_DAY;
 
   return (
     <div
-      style={{ ...theme } as React.CSSProperties}
       className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
     >
       <AnimatePresence>
@@ -113,12 +106,7 @@ export default function FloatingSky() {
 
       <SkyProvider value={skyValue}>
         <Atmosphere decor={decor} />
-        <Compass
-          night={night}
-          toggleNight={toggleNight}
-          soundOn={soundOn}
-          toggleSound={toggleSound}
-        />
+        <Compass soundOn={soundOn} toggleSound={toggleSound} />
         <main id="content">
           <Hero entered={heroEntered} />
           <About />

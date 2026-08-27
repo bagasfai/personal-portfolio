@@ -1,0 +1,51 @@
+/* Theme tokens, keyed off the data-theme attribute on <html>. The attribute is set by the
+   pre-paint script in app/layout.tsx, so the right palette is in effect before the first
+   paint and switching themes costs no React render. Values are the former THEME_DAY and
+   THEME_NIGHT objects, unchanged. */
+html[data-theme="day"] {
+  --sky-a: #cfe0ff;
+  --sky-b: #eef1ff;
+  --sky-c: #fff4ec;
+  --ink: #3b3e63;
+  --ink-soft: #6a6d90;
+  --glass: rgba(255,255,255,.55);
+  --glass-brd: rgba(255,255,255,.78);
+  --blob-lav: #c9d4ff;
+  --blob-blue: #bfe0ff;
+  --blob-peach: #ffd9bf;
+  --blob-mint: #c7ecd8;
+  --blob-blush: #ffd0e0;
+  --star-op: 0;
+  --ray-op: .5;
+  --grass1: #c6ecc9;
+  --grass2: #82d19a;
+  --rock1: #c3b2e0;
+  --rock2: #7a6ea6;
+  --shadow: rgba(90,80,130,.20);
+  --sunset: rgba(255,196,150,.55);
+  --field: rgba(255,255,255,.55);
+}
+
+html[data-theme="night"] {
+  --sky-a: #131736;
+  --sky-b: #222750;
+  --sky-c: #2f2b57;
+  --ink: #eef1ff;
+  --ink-soft: #b7bbe6;
+  --glass: rgba(42,48,96,.42);
+  --glass-brd: rgba(180,190,255,.32);
+  --blob-lav: #6a76c8;
+  --blob-blue: #5a86c8;
+  --blob-peach: #c58a6a;
+  --blob-mint: #5aa088;
+  --blob-blush: #c56f96;
+  --star-op: 1;
+  --ray-op: .28;
+  --grass1: #5c8f74;
+  --grass2: #3f6a56;
+  --rock1: #453f6b;
+  --rock2: #28244c;
+  --shadow: rgba(0,0,15,.45);
+  --sunset: rgba(210,130,150,.4);
+  --field: rgba(30,34,70,.5);
+}

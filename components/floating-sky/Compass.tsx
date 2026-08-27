@@ -1,25 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { NAV_ITEMS } from "@/content/nav";
+import { applyTheme, type ThemeName } from "@/lib/theme";
 
 const SECTION_IDS = NAV_ITEMS.map((n) => n.id);
 
 export default function Compass({
-  night,
-  toggleNight,
   soundOn,
   toggleSound,
 }: {
-  night: boolean;
-  toggleNight: () => void;
   soundOn: boolean;
   toggleSound: () => void;
 }) {
   const { scrollY } = useScroll();
   const [compact, setCompact] = useState(false);
   const [active, setActive] = useState("hero");
+
+  // The theme itself lives on <html data-theme>, set before first paint. This state
+  // exists only so the button can show the right glyph and label — nothing else in the
+  // tree re-renders when the sky changes.
+  const [theme, setTheme] = useState<ThemeName>("day");
+
+  useEffect(() => {
+    const current = document.documentElement.dataset.theme;
+    // Sync React with what the pre-paint script already decided. This cannot cause a
+    // visible change — the DOM attribute is already correct.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(current === "night" ? "night" : "day");
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    // The attribute is the source of truth, so read it rather than React state — and
+    // apply outside the updater, which must stay free of side effects.
+    const next: ThemeName =
+      document.documentElement.dataset.theme === "night" ? "day" : "night";
+    applyTheme(next);
+    setTheme(next);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const isCompact = latest > 70;
@@ -104,14 +123,16 @@ export default function Compass({
       </button>
 
       <motion.button
-        onClick={toggleNight}
+        onClick={toggleTheme}
         title="Shift the sky"
-        aria-label={night ? "Switch to day sky" : "Switch to night sky"}
+        aria-label={
+          theme === "night" ? "Switch to day sky" : "Switch to night sky"
+        }
         whileHover={{ rotate: 28, scale: 1.08 }}
         transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
         className="w-8.5 h-8.5 border-0 rounded-full cursor-pointer text-[15px] flex items-center justify-center text-(--ink) bg-(--glass-brd)"
       >
-        {night ? "☀" : "☾"}
+        {theme === "night" ? "☀" : "☾"}
       </motion.button>
     </motion.nav>
   );
