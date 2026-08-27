@@ -112,6 +112,7 @@ export default function Path() {
   return (
     <section
       id="my-journey"
+      aria-labelledby="journey-heading"
       data-screen-label="My Journey"
       className="relative z-2 min-h-screen flex flex-col items-center pt-32.5 px-[6vw] pb-37.5"
     >
@@ -125,7 +126,7 @@ export default function Path() {
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the path through time
         </p>
-        <h2 className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2 id="journey-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
           Stones I&apos;ve <em className="italic">stepped</em> across.
         </h2>
         <p className="mx-auto max-w-115 text-base leading-[1.7] text-(--ink-soft) text-pretty">

@@ -105,13 +105,15 @@ export default function FloatingSky() {
           soundOn={soundOn}
           toggleSound={toggleSound}
         />
-        <Hero entered={heroEntered} />
-        <About />
-        <Skills />
-        <Projects />
-        <Path />
-        <Blog />
-        <Contact />
+        <main id="content">
+          <Hero entered={heroEntered} />
+          <About />
+          <Skills />
+          <Projects />
+          <Path />
+          <Blog />
+          <Contact />
+        </main>
       </SkyProvider>
       <Footer />
     </div>

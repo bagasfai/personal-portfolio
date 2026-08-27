@@ -44,27 +44,22 @@ export const metadata: Metadata = {
     title: "Bagaskara - Floating Sky Portfolio",
     description:
       "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-    images: "/og.png",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bagaskara - Floating Sky Portfolio",
     description:
       "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-    images: "/og.png",
   },
   icons: {
     shortcut: "/favicon.ico",
   },
-  manifest: "/site.webmanifest",
   robots: {
     index: true,
     follow: true,
-    nocache: true,
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -107,7 +102,15 @@ export default function RootLayout({
           <style>{`[data-intro-curtain]{display:none}[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
       </head>
-      <body>{children}</body>
+      <body>
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[300] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-[#3b3e63] focus:font-semibold focus:shadow-lg"
+        >
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

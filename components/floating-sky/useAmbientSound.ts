@@ -16,6 +16,9 @@ function getAudioContextCtor(): typeof AudioContext | null {
   return w.AudioContext ?? w.webkitAudioContext ?? null;
 }
 
+const FADE_IN_S = 2.4;
+const FADE_OUT_S = 0.7;
+
 /**
  * Synthesized ambient soundscape (chord pad + filtered breeze noise) — no audio file.
  * Built lazily on first enable, closed on unmount. Mirrors the reference's Web Audio graph.
@@ -24,10 +27,7 @@ export function useAmbientSound() {
   const [soundOn, setSoundOn] = useState(false);
   const soundOnRef = useRef(false);
   const rigRef = useRef<AudioRig | null>(null);
-
-  useEffect(() => {
-    soundOnRef.current = soundOn;
-  }, [soundOn]);
+  const suspendTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const buildAudio = useCallback((): AudioRig | null => {
     if (rigRef.current) return rigRef.current;
@@ -118,11 +118,20 @@ export function useAmbientSound() {
     async (on: boolean) => {
       const rig = buildAudio();
       if (!rig) return;
-      try {
-        if (rig.ctx.state === "suspended") await rig.ctx.resume();
-      } catch {
-        // autoplay policy — will retry on next gesture
+
+      if (suspendTimerRef.current) {
+        clearTimeout(suspendTimerRef.current);
+        suspendTimerRef.current = null;
       }
+
+      if (on) {
+        try {
+          if (rig.ctx.state === "suspended") await rig.ctx.resume();
+        } catch {
+          // autoplay policy — will retry on next gesture
+        }
+      }
+
       const now = rig.ctx.currentTime;
       rig.master.gain.cancelScheduledValues(now);
       rig.master.gain.setValueAtTime(
@@ -131,8 +140,25 @@ export function useAmbientSound() {
       );
       rig.master.gain.linearRampToValueAtTime(
         on ? 0.5 : 0.0001,
-        now + (on ? 2.4 : 0.7),
+        now + (on ? FADE_IN_S : FADE_OUT_S),
       );
+
+      if (!on) {
+        // Let the ramp finish, then stop the graph entirely. Without this the
+        // oscillators and noise source keep running for the rest of the session,
+        // costing CPU and battery to produce silence.
+        suspendTimerRef.current = setTimeout(
+          () => {
+            rig.ctx.suspend().catch(() => {
+              // already closed — nothing to suspend
+            });
+            suspendTimerRef.current = null;
+          },
+          FADE_OUT_S * 1000 + 100,
+        );
+      }
+
+      soundOnRef.current = on;
       setSoundOn(on);
       try {
         localStorage.setItem("sky-sound", on ? "1" : "0");
@@ -171,6 +197,7 @@ export function useAmbientSound() {
 
   useEffect(() => {
     return () => {
+      if (suspendTimerRef.current) clearTimeout(suspendTimerRef.current);
       if (rigRef.current) {
         try {
           rigRef.current.ctx.close();

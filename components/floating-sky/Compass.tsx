@@ -70,6 +70,7 @@ export default function Compass({
         <motion.a
           key={n.id}
           href={`#${n.id}`}
+          aria-current={active === n.id ? "true" : undefined}
           whileHover={{ y: -1 }}
           className={`no-underline px-3 py-1.5 rounded-full text-[13px] tracking-[0.2px] cursor-pointer whitespace-nowrap [transition:background_.35s_ease,color_.35s_ease] ${
             active === n.id
