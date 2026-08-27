@@ -20,12 +20,26 @@ import Path from "./Path";
 import Blog from "./Blog";
 import Contact from "./Contact";
 import Footer from "./Footer";
-import { createAtmosphereDecor, THEME_DAY, THEME_NIGHT } from "./data";
+import {
+  createClouds,
+  createParticles,
+  createStars,
+  createBirds,
+} from "@/lib/decor";
+import { THEME_DAY, THEME_NIGHT } from "@/lib/theme-tokens";
 import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
 export default function FloatingSky() {
-  const decor = useMemo(() => createAtmosphereDecor(), []);
+  const decor = useMemo(
+    () => ({
+      clouds: createClouds(),
+      particles: createParticles(),
+      stars: createStars(),
+      birds: createBirds(),
+    }),
+    [],
+  );
   const prefersReduced = useReducedMotion();
 
   const [night, setNight] = useState(false);

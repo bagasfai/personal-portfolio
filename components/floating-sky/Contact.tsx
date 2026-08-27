@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { createLibraryDecor } from "./data";
+import { createLanterns } from "@/lib/decor";
 
 const fieldBase =
   "w-full py-[13px] px-3.75 rounded-[14px] border border-[var(--glass-brd)] bg-[var(--field)] font-[family-name:var(--font-manrope),sans-serif] text-sm text-[var(--ink)] outline-none";
@@ -11,7 +11,7 @@ const fieldBase =
 const CONTACT_EMAIL = "bagasfai50@gmail.com";
 
 export default function Contact() {
-  const lanterns = useMemo(() => createLibraryDecor().lanterns, []);
+  const lanterns = useMemo(() => createLanterns(), []);
   const [sent, setSent] = useState(false);
 
   return (

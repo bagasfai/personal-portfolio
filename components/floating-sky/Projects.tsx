@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { getProjects, type Project } from "./data";
+import { getProjects } from "@/content/projects";
+import type { Project } from "@/lib/types";
 
 function Tower({ p }: { p: Project }) {
   const [hovered, setHovered] = useState(false);

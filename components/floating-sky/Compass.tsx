@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { NAV_ITEMS } from "./data";
+import { NAV_ITEMS } from "@/content/nav";
 
 const SECTION_IDS = NAV_ITEMS.map((n) => n.id);
 

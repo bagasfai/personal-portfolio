@@ -3,10 +3,11 @@
 import { useMemo } from "react";
 import { motion } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { createLibraryDecor, getArticles } from "./data";
+import { createPapers } from "@/lib/decor";
+import { getArticles } from "@/content/articles";
 
 export default function Blog() {
-  const papers = useMemo(() => createLibraryDecor().papers, []);
+  const papers = useMemo(() => createPapers(), []);
   const articles = useMemo(() => getArticles(), []);
 
   return (

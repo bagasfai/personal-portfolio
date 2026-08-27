@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useTransform } from "motion/react";
 import { useSky } from "./SkyContext";
 import { useParallax } from "./useParallax";
-import type { AtmosphereDecor } from "./data";
+import type { Cloud, Particle, Star, Bird } from "@/lib/types";
 
 function Blob({
   factor,
@@ -69,7 +69,7 @@ export default function Atmosphere({
   decor,
   showBirds = true,
 }: {
-  decor: AtmosphereDecor;
+  decor: { clouds: Cloud[]; particles: Particle[]; stars: Star[]; birds: Bird[] };
   showBirds?: boolean;
 }) {
   return (

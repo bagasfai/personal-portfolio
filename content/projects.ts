@@ -1,0 +1,101 @@
+import type { Project } from "@/lib/types";
+
+const PROJECT_BASE = [
+  {
+    name: "Project One",
+    glyph: "✦",
+    tag: "WEB APP",
+    desc: "A placeholder for something you built — swap in the story, the stack, and the links when you decide.",
+    c1: "#a9c2ff",
+    c2: "#6f7fd6",
+    glow: "rgba(140,160,255,.4)",
+    badges: ["React", "Node", "Postgres"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Two",
+    glyph: "❋",
+    tag: "PLATFORM",
+    desc: "Room for a favourite build. Describe the problem, the shape of the solution, and what felt good about it.",
+    c1: "#a8e6c8",
+    c2: "#4fa880",
+    glow: "rgba(120,220,170,.4)",
+    badges: ["Next.js", "GraphQL"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Three",
+    glyph: "✺",
+    tag: "MOBILE",
+    desc: "Another empty tower waiting for a real project. Keep the copy warm and human — say what it feels like to use.",
+    c1: "#ffc9dd",
+    c2: "#d66f9a",
+    glow: "rgba(255,150,195,.4)",
+    badges: ["React Native", "AWS", "TS"],
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Four",
+    glyph: "❂",
+    tag: "TOOLING",
+    desc: "A slot for a tool, library, or experiment. Placeholder text you can replace whenever inspiration lands.",
+    c1: "#ffd9b8",
+    c2: "#d69a4a",
+    glow: "rgba(255,190,120,.4)",
+    badges: ["Python", "Docker"],
+    demoLink: "https://example.com",
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Five",
+    glyph: "✧",
+    tag: "DESIGN",
+    desc: "Reserved for a design-heavy build. Talk about the details you sweated and the calm you were chasing.",
+    c1: "#d8ccff",
+    c2: "#8a76d6",
+    glow: "rgba(170,150,240,.4)",
+    badges: ["Figma", "Framer"],
+    githubLink: "https://example.com",
+  },
+  {
+    name: "Project Six",
+    glyph: "❈",
+    tag: "OPEN SOURCE",
+    desc: "One more placeholder tower. Add a project you gave back to the community, or delete it — your city, your rules.",
+    c1: "#bfe6ff",
+    c2: "#4a90d6",
+    glow: "rgba(120,190,255,.4)",
+    badges: ["Rust", "WASM"],
+  },
+];
+
+export function getProjects(): Project[] {
+  const aligns: Project["align"][] = [
+    "end",
+    "center",
+    "end",
+    "center",
+    "end",
+    "center",
+  ];
+  const lifts = ["0px", "38px", "14px", "46px", "0px", "30px"];
+  return PROJECT_BASE.map((p, i) => ({
+    i,
+    ...p,
+    year: "202" + (2 + (i % 4)),
+    align: aligns[i % aligns.length],
+    lift: lifts[i % lifts.length],
+    float: (5.5 + (i % 4) * 0.8).toFixed(1) + "s",
+    delay: (-(i * 0.7)).toFixed(1) + "s",
+    badges: p.badges.map((name, j) => ({
+      name,
+      orbit: 66 + j * 8 + "px",
+      dur: 16 + j * 5 + "s",
+      delay: -(j * 3.5) + "s",
+    })),
+    demoLink: p.demoLink ? p.demoLink : null,
+    githubLink: p.githubLink ? p.githubLink : null,
+  }));
+}

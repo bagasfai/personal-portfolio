@@ -3,7 +3,7 @@
 import { useMemo, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { createAtmosphereDecor } from "./data";
+import { createLeaves } from "@/lib/decor";
 
 function PortraitSlot() {
   return (
@@ -16,7 +16,7 @@ function PortraitSlot() {
 }
 
 export default function About() {
-  const leaves = useMemo(() => createAtmosphereDecor().leaves, []);
+  const leaves = useMemo(() => createLeaves(), []);
 
   const wrapRef = useRef<HTMLDivElement>(null);
   const rotateX = useMotionValue(0);

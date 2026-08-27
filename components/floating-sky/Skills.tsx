@@ -9,7 +9,8 @@ import {
 } from "motion/react";
 import { useSky } from "./SkyContext";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { getCrystals, type Crystal } from "./data";
+import { getCrystals } from "@/content/crystals";
+import type { Crystal } from "@/lib/types";
 
 const REPEL_RADIUS = 150;
 const REPEL_STRENGTH = 34;

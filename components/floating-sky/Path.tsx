@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
-import { getSteps, type Step } from "./data";
+import { getSteps } from "@/content/steps";
+import type { Step } from "@/lib/types";
 
 const LIT_GRADIENT = "linear-gradient(135deg,#b9c6ff,#d9bcff 55%,#ffc6d8)";
 const LIT_SHADOW =
