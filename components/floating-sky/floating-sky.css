@@ -283,3 +283,90 @@ html {
     left: 16px !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Hover and focus affordances.
+
+   These used to be React state driving Motion animations, which meant a hover
+   re-rendered the card. They are pure presentation, so CSS owns them: hovering
+   now costs nothing on the main thread and never touches React.
+
+   The :focus-within pairings are new. The old whileHover implementation was
+   mouse-only, so keyboard users never saw the tooltips or the link row.
+
+   `!important` on the three hover transforms is load-bearing, not decoration.
+   .tower, .journal-card, and .step-card are Motion reveal targets, and once the
+   reveal finishes Motion leaves `transform: none` on the element as an inline
+   style. An inline style outranks a stylesheet rule, so without !important the
+   lift silently does nothing and only the box-shadow lands. Same reason the
+   [data-reveal] override in app/globals.css needs it. The transition still
+   animates normally, because transitions fire on computed-value changes
+   regardless of origin.
+   --------------------------------------------------------------------------- */
+
+/* Project towers — glow, badges, and link row respond to hovering the whole card. */
+.tower .tower-glow,
+.tower .tower-badges {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.tower:hover .tower-glow,
+.tower:hover .tower-badges,
+.tower:focus-within .tower-glow,
+.tower:focus-within .tower-badges {
+  opacity: 1;
+}
+.tower .tower-links {
+  opacity: 0.55;
+  transform: translateY(6px);
+  transition:
+    opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tower:hover .tower-links,
+.tower:focus-within .tower-links {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tower {
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s ease;
+}
+.tower:hover {
+  transform: translateY(-20px) scale(1.015) !important;
+}
+
+/* Crystals — tooltip on hover or keyboard focus. */
+.crystal .crystal-tip {
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition:
+    opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.crystal:hover .crystal-tip,
+.crystal:focus-within .crystal-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.crystal:hover .crystal-gem,
+.crystal:focus-within .crystal-gem {
+  animation-play-state: paused;
+}
+
+/* Journal cards and step cards — simple lift. */
+.journal-card,
+.step-card {
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s ease;
+}
+.journal-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 30px 60px rgba(110, 100, 180, 0.3);
+}
+.step-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 30px 60px rgba(110, 100, 180, 0.32);
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {
   m,
   motionValue,
@@ -27,9 +27,6 @@ function CrystalItem({
   y: MotionValue<number>;
   nodeRef: (el: HTMLDivElement | null) => void;
 }) {
-  const [hovered, setHovered] = useState(false);
-  const gemRef = useRef<HTMLDivElement | null>(null);
-
   return (
     <m.div
       ref={nodeRef}
@@ -43,19 +40,10 @@ function CrystalItem({
           y,
         } as unknown as React.CSSProperties
       }
-      className="absolute left-(--k-left) top-(--k-top) w-(--k-size) h-(--k-size) ml-(--k-half) mt-(--k-half) will-change-transform"
+      className="crystal absolute left-(--k-left) top-(--k-top) w-(--k-size) h-(--k-size) ml-(--k-half) mt-(--k-half)"
     >
       <div
-        onPointerEnter={() => {
-          setHovered(true);
-          if (gemRef.current)
-            gemRef.current.style.animationPlayState = "paused";
-        }}
-        onPointerLeave={() => {
-          setHovered(false);
-          if (gemRef.current)
-            gemRef.current.style.animationPlayState = "running";
-        }}
+        tabIndex={0}
         style={
           {
             "--k-bob-anim": `floatC ${k.bob} ease-in-out ${k.delay} infinite`,
@@ -74,13 +62,12 @@ function CrystalItem({
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div
-            ref={gemRef}
             style={
               {
                 "--k-spin-anim": `spinY ${k.spin} linear infinite`,
               } as React.CSSProperties
             }
-            className="w-[70%] h-[70%] transform-3d animate-(--k-spin-anim)"
+            className="crystal-gem w-[70%] h-[70%] transform-3d animate-(--k-spin-anim)"
           >
             <div
               style={
@@ -97,12 +84,7 @@ function CrystalItem({
           {k.name}
         </div>
 
-        <m.div
-          animate={hovered ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-          style={{ x: "-50%" }}
-          className="absolute left-1/2 bottom-[calc(100%+14px)] w-53 py-3.75 px-4.25 rounded-[20px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.3] shadow-[0_22px_50px_rgba(110,100,180,0.3)] pointer-events-none z-20"
-        >
+        <div className="crystal-tip absolute left-1/2 bottom-[calc(100%+14px)] w-53 py-3.75 px-4.25 rounded-[20px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.3] shadow-[0_22px_50px_rgba(110,100,180,0.3)] pointer-events-none z-20">
           <div className="flex items-center justify-between mb-1.75">
             <span className="font-[family-name:var(--font-instrument-serif),serif] text-xl text-(--ink)">
               {k.name}
@@ -122,7 +104,7 @@ function CrystalItem({
           <p className="m-0 text-[13px] leading-[1.55] text-(--ink-soft) text-pretty">
             {k.desc}
           </p>
-        </m.div>
+        </div>
       </div>
     </m.div>
   );

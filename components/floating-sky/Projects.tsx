@@ -1,14 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { m } from "motion/react";
 import { revealVariants, revealViewport } from "./motionVariants";
 import { getProjects } from "@/content/projects";
 import type { Project } from "@/lib/types";
 
 function Tower({ p }: { p: Project }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
     <m.div
       className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
@@ -17,10 +15,6 @@ function Tower({ p }: { p: Project }) {
       initial="hidden"
       whileInView="show"
       viewport={revealViewport}
-      whileHover={{ y: -20, scale: 1.015 }}
-      transition={{ type: "spring", stiffness: 200, damping: 24 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
       style={
         {
           "--tower-align": p.align,
@@ -28,23 +22,16 @@ function Tower({ p }: { p: Project }) {
         } as React.CSSProperties
       }
     >
-      <m.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.55 }}
+      <div
         style={
           {
-            x: "-50%",
             "--glow-bg": `radial-gradient(closest-side, ${p.glow}, transparent 74%)`,
           } as React.CSSProperties
         }
-        className="absolute left-1/2 -bottom-6.5 w-[78%] h-15 rounded-full pointer-events-none blur-xs bg-(image:--glow-bg)"
+        className="tower-glow absolute left-1/2 -bottom-6.5 w-[78%] h-15 -translate-x-1/2 rounded-full pointer-events-none blur-xs bg-(image:--glow-bg)"
       />
 
-      <m.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-        className="absolute inset-0 pointer-events-none z-6"
-      >
+      <div className="tower-badges absolute inset-0 pointer-events-none z-6">
         {p.badges.map((b) => (
           <div
             key={b.name}
@@ -61,7 +48,7 @@ function Tower({ p }: { p: Project }) {
             </span>
           </div>
         ))}
-      </m.div>
+      </div>
 
       <div
         style={
@@ -98,11 +85,7 @@ function Tower({ p }: { p: Project }) {
             <p className="mb-4.5 text-sm leading-[1.6] text-(--ink-soft) min-h-16.5 text-pretty">
               {p.desc}
             </p>
-            <m.div
-              animate={hovered ? { opacity: 1, y: 0 } : { opacity: 0.55, y: 6 }}
-              transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              className="flex gap-2.5"
-            >
+            <div className="tower-links flex gap-2.5">
               {p.demoLink && (
                 <a
                   href={p.demoLink}
@@ -129,7 +112,7 @@ function Tower({ p }: { p: Project }) {
                   GitHub
                 </a>
               )}
-            </m.div>
+            </div>
           </div>
         </div>
         <div className="relative h-11 -mt-0.5">

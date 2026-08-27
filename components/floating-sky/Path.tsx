@@ -68,7 +68,6 @@ function StepNode({ s, index }: { s: Step; index: number }) {
         initial="hidden"
         whileInView="show"
         viewport={revealViewport}
-        whileHover={{ y: -4, boxShadow: "0 30px 60px rgba(110,100,180,.32)" }}
       >
         <div className="flex items-baseline justify-between gap-3 mb-1">
           <span

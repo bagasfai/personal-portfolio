@@ -62,12 +62,7 @@ export default function Blog() {
               initial="hidden"
               whileInView="show"
               viewport={revealViewport}
-              whileHover={{
-                y: -6,
-                boxShadow: "0 30px 60px rgba(110,100,180,.3)",
-              }}
-              transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              className="block rounded-3xl overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_20px_44px_rgba(110,100,180,0.2),inset_0_1px_0_rgba(255,255,255,0.55)]"
+              className="journal-card block rounded-3xl overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_20px_44px_rgba(110,100,180,0.2),inset_0_1px_0_rgba(255,255,255,0.55)]"
             >
               <div
                 style={
