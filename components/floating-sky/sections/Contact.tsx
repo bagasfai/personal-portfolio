@@ -1,6 +1,7 @@
 import Reveal from "../motion/Reveal";
 import LanternRow from "./LanternRow";
 import ContactForm from "./ContactForm";
+import { CONTACT_EMAIL } from "@/content/contact";
 
 export default function Contact() {
   return (
@@ -32,10 +33,10 @@ export default function Contact() {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="mailto:hello@bagaskara.dev"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="inline-flex items-center gap-2 py-2.75 px-4.5 rounded-full no-underline text-sm font-semibold text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-[10px]"
             >
-              ✦ hello@bagaskara.dev
+              ✦ {CONTACT_EMAIL}
             </a>
             <a
               href="https://github.com/bagasfai"
