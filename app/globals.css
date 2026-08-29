@@ -15,3 +15,32 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+/* Set by the pre-paint script in app/layout.tsx. "0" means this visitor has already
+   seen the intro this session, or prefers reduced motion. */
+html[data-sky-intro="0"] [data-intro-curtain] {
+  display: none;
+}
+
+/* Failsafe: if the JS bundle never takes over, React can never unmount the curtain and it
+   would cover the page forever. On a normal load React removes it at ~3.2s, so this never
+   gets the chance to run. Scoped to the play-intro state, so the skip path is unaffected. */
+@keyframes sky-intro-failsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+html[data-sky-intro="1"] [data-intro-curtain] {
+  animation: sky-intro-failsafe 1s linear 10s forwards;
+}
+
+/* On the skip path the curtain is hidden, so the hero's server-rendered hidden variant
+   would otherwise show as a blank hero until hydration. `!important` is needed to beat
+   Motion's inline styles; it is safe to leave applied, because once `heroEntered` flips
+   true Motion animates these same elements to exactly opacity 1 / transform none. */
+html[data-sky-intro="0"] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}

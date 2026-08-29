@@ -12,6 +12,7 @@ export default function Blog() {
   return (
     <section
       id="journal"
+      aria-labelledby="journal-heading"
       data-screen-label="Journal"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-32.5 px-[6vw] pb-35"
     >
@@ -41,7 +42,7 @@ export default function Blog() {
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the floating library
         </p>
-        <h2 className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2 id="journal-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
           Words I&apos;ve left on the <em className="italic">shelves.</em>
         </h2>
         <p className="mx-auto max-w-115 text-base leading-[1.7] text-(--ink-soft) text-pretty">
@@ -53,10 +54,8 @@ export default function Blog() {
       <div className="relative w-full max-w-250">
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6.5">
           {articles.map((a, i) => (
-            <motion.a
+            <motion.article
               key={a.title}
-              href="#"
-              onClick={(e) => e.preventDefault()}
               custom={i}
               variants={revealVariants}
               initial="hidden"
@@ -67,7 +66,7 @@ export default function Blog() {
                 boxShadow: "0 30px 60px rgba(110,100,180,.3)",
               }}
               transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              className="no-underline block rounded-3xl overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_20px_44px_rgba(110,100,180,0.2),inset_0_1px_0_rgba(255,255,255,0.55)]"
+              className="block rounded-3xl overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-lg backdrop-saturate-[1.2] shadow-[0_20px_44px_rgba(110,100,180,0.2),inset_0_1px_0_rgba(255,255,255,0.55)]"
             >
               <div
                 style={
@@ -104,7 +103,7 @@ export default function Blog() {
                   Read →
                 </span>
               </div>
-            </motion.a>
+            </motion.article>
           ))}
         </div>
       </div>

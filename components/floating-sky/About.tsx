@@ -49,6 +49,7 @@ export default function About() {
   return (
     <section
       id="my-story"
+      aria-labelledby="story-heading"
       data-screen-label="My Story"
       className="relative z-2 min-h-screen flex items-center justify-center pt-27.5 px-[7vw] pb-32.5"
     >
@@ -115,7 +116,7 @@ export default function About() {
           <p className="mb-2.5 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
             a little about me
           </p>
-          <h2 className="mb-6 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.6vw,54px)] leading-[1.06] tracking-[-0.4px] text-(--ink) text-balance">
+          <h2 id="story-heading" className="mb-6 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.6vw,54px)] leading-[1.06] tracking-[-0.4px] text-(--ink) text-balance">
             I turn fuzzy ideas into software that feels{" "}
             <em className="italic">light</em> to use.
           </h2>

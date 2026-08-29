@@ -21,6 +21,7 @@ import Blog from "./Blog";
 import Contact from "./Contact";
 import Footer from "./Footer";
 import { createAtmosphereDecor, THEME_DAY, THEME_NIGHT } from "./data";
+import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
 export default function FloatingSky() {
@@ -32,7 +33,6 @@ export default function FloatingSky() {
 
   const { soundOn, toggleSound } = useAmbientSound();
 
-  // pointer motion values — never trigger a re-render
   const mvx = useMotionValue(0);
   const mvy = useMotionValue(0);
   const cx = useMotionValue(0);
@@ -52,37 +52,25 @@ export default function FloatingSky() {
     return () => window.removeEventListener("pointermove", onMove);
   }, [prefersReduced, mvx, mvy, cx, cy]);
 
-  const [showIntro, setShowIntro] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
   const [heroEntered, setHeroEntered] = useState(false);
 
   useEffect(() => {
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem("sky-intro") === "1";
-    } catch {
-      seen = false;
-    }
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
-    if (seen || reduce) {
-      // One-time read of sessionStorage/matchMedia on mount — can't run during
-      // render (SSR has no browser APIs), so this must live in an effect.
+    if (document.documentElement.dataset.skyIntro === "0") {
       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setShowIntro(false);
       setHeroEntered(true);
       return;
     }
-    setShowIntro(true);
     const t = setTimeout(() => {
       setShowIntro(false);
       setHeroEntered(true);
       try {
-        sessionStorage.setItem("sky-intro", "1");
+        sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
       } catch {
-        // storage unavailable — intro will simply replay next load
+        // 
       }
-    }, 2090);
+    }, INTRO_TOTAL_MS);
     return () => clearTimeout(t);
   }, []);
 
@@ -98,9 +86,7 @@ export default function FloatingSky() {
       style={{ ...theme } as React.CSSProperties}
       className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
     >
-      <AnimatePresence>
-        {showIntro && <IntroCurtain visible={showIntro} />}
-      </AnimatePresence>
+      <AnimatePresence>{showIntro && <IntroCurtain />}</AnimatePresence>
 
       <SkyProvider value={skyValue}>
         <Atmosphere decor={decor} />
@@ -110,13 +96,15 @@ export default function FloatingSky() {
           soundOn={soundOn}
           toggleSound={toggleSound}
         />
-        <Hero entered={heroEntered} />
-        <About />
-        <Skills />
-        <Projects />
-        <Path />
-        <Blog />
-        <Contact />
+        <main id="content">
+          <Hero entered={heroEntered} />
+          <About />
+          <Skills />
+          <Projects />
+          <Path />
+          <Blog />
+          <Contact />
+        </main>
       </SkyProvider>
       <Footer />
     </div>

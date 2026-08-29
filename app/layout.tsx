@@ -1,6 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Manrope, Caveat } from "next/font/google";
 import "./globals.css";
+import {
+  INTRO_STORAGE_KEY,
+  REDUCED_MOTION_QUERY,
+} from "@/components/floating-sky/introTiming";
+
+const introSkipScript = `(function(){var m=false;try{m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
+  REDUCED_MOTION_QUERY,
+)}).matches);}catch(e){}var s=false;try{s=sessionStorage.getItem(${JSON.stringify(
+  INTRO_STORAGE_KEY,
+)})==="1";}catch(e){}document.documentElement.dataset.skyIntro=(s||m)?"0":"1";})();`;
 
 const instrumentSerif = Instrument_Serif({
   variable: "--font-instrument-serif",
@@ -26,36 +36,26 @@ export const metadata: Metadata = {
   title: "Bagaskara - Floating Sky Portfolio",
   description:
     "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   openGraph: {
     title: "Bagaskara - Floating Sky Portfolio",
     description:
       "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-    images: "/og.png",
   },
   twitter: {
     card: "summary_large_image",
     title: "Bagaskara - Floating Sky Portfolio",
     description:
       "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
-    images: "/og.png",
   },
   icons: {
     shortcut: "/favicon.ico",
   },
-  manifest: "/site.webmanifest",
   robots: {
     index: true,
     follow: true,
-    nocache: true,
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -75,6 +75,11 @@ export const metadata: Metadata = {
   publisher: "Bagaskara",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -83,9 +88,25 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-sky-intro="1"
+      suppressHydrationWarning
       className={`${instrumentSerif.variable} ${manrope.variable} ${caveat.variable}`}
     >
-      <body>{children}</body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introSkipScript }} />
+        <noscript>
+          <style>{`[data-intro-curtain]{display:none}[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
+      <body>
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[300] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-[#3b3e63] focus:font-semibold focus:shadow-lg"
+        >
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

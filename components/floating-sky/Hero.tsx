@@ -41,6 +41,7 @@ export default function Hero({ entered }: { entered: boolean }) {
   return (
     <section
       id="hero"
+      aria-labelledby="hero-heading"
       data-screen-label="Hero"
       className="relative z-2 min-h-screen flex items-center justify-center pt-30 px-[7vw] pb-20"
     >
@@ -54,6 +55,7 @@ export default function Hero({ entered }: { entered: boolean }) {
         <div className="flex-[1_1_380px] min-w-75">
           <motion.div
             variants={textVariants}
+            data-reveal
             className="inline-flex items-center gap-2.25 py-1.75 px-3.75 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-md text-[12.5px] font-semibold tracking-[0.4px] text-(--ink-soft) mb-6.5"
           >
             <span className="w-1.75 h-1.75 rounded-full bg-[#8fd6a8] shadow-[0_0_8px_#8fd6a8] animate-[twinkle_3s_ease-in-out_infinite]" />
@@ -62,13 +64,16 @@ export default function Hero({ entered }: { entered: boolean }) {
 
           <motion.p
             variants={textVariants}
+            data-reveal
             className="mb-1.5 font-[family-name:var(--font-caveat),cursive] text-[28px] font-semibold text-(--ink-soft)"
           >
             Hi, I&apos;m Bagaskara —
           </motion.p>
 
           <motion.h1
+            id="hero-heading"
             variants={textVariants}
+            data-reveal
             className="m-0 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(46px,7vw,88px)] leading-[1.02] tracking-[-0.5px] text-(--ink) text-balance"
           >
             I build{" "}
@@ -81,6 +86,7 @@ export default function Hero({ entered }: { entered: boolean }) {
 
           <motion.p
             variants={textVariants}
+            data-reveal
             className="mt-6.5 max-w-110 text-[17px] leading-[1.7] font-normal text-(--ink-soft) text-pretty"
           >
             A developer who cares about the quiet details — the ones you feel
@@ -89,6 +95,7 @@ export default function Hero({ entered }: { entered: boolean }) {
 
           <motion.div
             variants={textVariants}
+            data-reveal
             className="flex flex-wrap gap-3.5 mt-8.5"
           >
             <motion.a
@@ -113,6 +120,7 @@ export default function Hero({ entered }: { entered: boolean }) {
 
           <motion.div
             variants={textVariants}
+            data-reveal
             className="flex items-center gap-2.5 mt-11 text-(--ink-soft) text-[12.5px] tracking-[0.5px] font-medium"
           >
             <span className="inline-block w-5.5 h-8.5 rounded-xl border-[1.5px] border-(--ink-soft) opacity-60 relative">
@@ -125,6 +133,7 @@ export default function Hero({ entered }: { entered: boolean }) {
         {/* floating island + avatar */}
         <motion.div
           variants={islandVariants}
+          data-reveal
           className="flex-[0_1_440px] min-w-75 h-120 relative"
         >
           <motion.div
