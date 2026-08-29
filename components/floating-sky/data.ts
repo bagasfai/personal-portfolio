@@ -136,11 +136,6 @@ export interface NavItem {
   label: string;
 }
 
-// Deterministic PRNG. The route is statically prerendered, so decor generated with
-// Math.random() would be frozen at build time in the HTML but regenerated differently on
-// every client hydration — a guaranteed mismatch across ~190 elements. Seeding per call
-// (rather than once at module scope) keeps each generator's output independent of how
-// many times any other generator has run, so render order cannot desynchronize it.
 function mulberry32(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -279,7 +274,7 @@ export function createLibraryDecor(): LibraryDecor {
 const CRYSTAL_BASE = [
   {
     name: "React",
-    years: "5 yrs",
+    years: "2 yrs",
     c1: "#bfe6ff",
     c2: "#4aa3d6",
     glow: "rgba(120,200,255,.4)",
@@ -287,7 +282,7 @@ const CRYSTAL_BASE = [
   },
   {
     name: "TypeScript",
-    years: "5 yrs",
+    years: "1 yrs",
     c1: "#c3d4ff",
     c2: "#4f6fd6",
     glow: "rgba(120,150,255,.4)",
@@ -295,7 +290,7 @@ const CRYSTAL_BASE = [
   },
   {
     name: "Node.js",
-    years: "5 yrs",
+    years: "2 yrs",
     c1: "#cdeecb",
     c2: "#5aa06e",
     glow: "rgba(140,210,150,.4)",
@@ -303,7 +298,7 @@ const CRYSTAL_BASE = [
   },
   {
     name: "Next.js",
-    years: "4 yrs",
+    years: "1 yrs",
     c1: "#e6e2f5",
     c2: "#6a6ea6",
     glow: "rgba(170,160,220,.4)",
@@ -311,39 +306,23 @@ const CRYSTAL_BASE = [
   },
   {
     name: "PostgreSQL",
-    years: "4 yrs",
+    years: "2 yrs",
     c1: "#c9d9ff",
     c2: "#3f63c8",
     glow: "rgba(120,160,255,.38)",
     desc: "Relational thinking, thoughtful indexes, data that ages well.",
   },
   {
-    name: "Python",
-    years: "4 yrs",
+    name: "PHP",
+    years: "3 yrs",
     c1: "#ffe3bf",
     c2: "#d69a4a",
     glow: "rgba(255,200,130,.4)",
     desc: "Scripts, pipelines, and the occasional model — glue that holds systems together.",
   },
   {
-    name: "GraphQL",
-    years: "3 yrs",
-    c1: "#ffcfe4",
-    c2: "#d64f96",
-    glow: "rgba(255,150,200,.38)",
-    desc: "One graph to ask anything — schemas that stay honest.",
-  },
-  {
-    name: "AWS",
-    years: "4 yrs",
-    c1: "#ffd9c0",
-    c2: "#d67a4a",
-    glow: "rgba(255,170,120,.38)",
-    desc: "Infrastructure as calm weather — provisioned, observed, forgotten.",
-  },
-  {
     name: "Docker",
-    years: "4 yrs",
+    years: "1 yrs",
     c1: "#c5e8ff",
     c2: "#4a90d6",
     glow: "rgba(120,190,255,.38)",
@@ -351,7 +330,7 @@ const CRYSTAL_BASE = [
   },
   {
     name: "Tailwind",
-    years: "3 yrs",
+    years: "2 yrs",
     c1: "#c0f0ea",
     c2: "#3aa89a",
     glow: "rgba(120,220,205,.4)",
@@ -483,38 +462,42 @@ export function getProjects(): Project[] {
 
 const STEP_BASE = [
   {
-    period: "NOW · 2026",
-    place: "Somewhere in the clouds",
-    role: "Senior Full-Stack Developer",
-    desc: "A placeholder chapter for your current role — what you own, the calm systems you keep aloft, the people you build with.",
-    tags: ["Leadership", "React", "Cloud"],
-    accent: "#7f8fd6",
-    glyph: "✦",
-  },
-  {
-    period: "2023 — 2025",
-    place: "A studio you loved",
-    role: "Product Engineer",
-    desc: "Room to describe a formative role. The messy middle, the shipped things, the details you refused to skip.",
-    tags: ["Next.js", "Node", "Design"],
-    accent: "#4fa880",
-    glyph: "❋",
-  },
-  {
-    period: "2021 — 2023",
-    place: "A growing team",
+    period: "Nov 2025 — NOW · 2026",
+    place: "Herca Group",
     role: "Full-Stack Developer",
     desc: "Placeholder for the years you found your stride. Swap in the wins and the lessons whenever you like.",
-    tags: ["TypeScript", "Postgres"],
+    tags: [
+      "TypeScript",
+      "React Native",
+      "NextJS",
+      "ReactJS",
+      "Laravel",
+      "PHP",
+      "Yii2",
+      "Docker",
+    ],
     accent: "#d66f9a",
     glyph: "✺",
   },
   {
-    period: "2019 — 2021",
-    place: "Where it began",
-    role: "Junior Developer",
+    period: "Oct 2023 — Aug 2025",
+    place: "PT Satria Digital Sejahtera",
+    role: "Full-Stack Developer",
     desc: "The first stone. A gentle note about starting out, the curiosity that carried you, the first thing that shipped.",
-    tags: ["JavaScript", "APIs"],
+    tags: [
+      "JavaScript",
+      "APIs",
+      "MySQL",
+      "PHP",
+      "Laravel",
+      "ReactJS",
+      "InertiaJS",
+      "Livewire",
+      "TailwindCSS",
+      "AlpineJS",
+      "CodeIgniter",
+      "JQuery",
+    ],
     accent: "#d69a4a",
     glyph: "✧",
   },
