@@ -41,6 +41,7 @@ export default function Hero({ entered }: { entered: boolean }) {
   return (
     <section
       id="hero"
+      aria-labelledby="hero-heading"
       data-screen-label="Hero"
       className="relative z-2 min-h-screen flex items-center justify-center pt-30 px-[7vw] pb-20"
     >
@@ -52,10 +53,6 @@ export default function Hero({ entered }: { entered: boolean }) {
       >
         {/* text */}
         <div className="flex-[1_1_380px] min-w-75">
-          {/* data-reveal: app/globals.css forces opacity:1/transform:none !important on
-              these wrappers when data-sky-intro="0" (skip path). Any hover/scroll transform
-              added to a data-reveal element will work on first load but be silently dead
-              for repeat visitors and reduced-motion users. */}
           <motion.div
             variants={textVariants}
             data-reveal
@@ -74,6 +71,7 @@ export default function Hero({ entered }: { entered: boolean }) {
           </motion.p>
 
           <motion.h1
+            id="hero-heading"
             variants={textVariants}
             data-reveal
             className="m-0 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(46px,7vw,88px)] leading-[1.02] tracking-[-0.5px] text-(--ink) text-balance"

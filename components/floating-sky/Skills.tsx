@@ -189,6 +189,7 @@ export default function Skills() {
   return (
     <section
       id="workshop"
+      aria-labelledby="workshop-heading"
       data-screen-label="Workshop"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-32.5"
     >
@@ -202,7 +203,7 @@ export default function Skills() {
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the workshop
         </p>
-        <h2 className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2 id="workshop-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
           Tools I&apos;ve shaped into <em className="italic">stones.</em>
         </h2>
         <p className="mx-auto max-w-110 text-base leading-[1.7] text-(--ink-soft) text-pretty">
@@ -211,10 +212,7 @@ export default function Skills() {
         </p>
       </motion.div>
 
-      <div
-        id="workshop"
-        className="relative w-full max-w-250 min-h-140 mt-5 flex items-center justify-center"
-      >
+      <div className="relative w-full max-w-250 min-h-140 mt-5 flex items-center justify-center">
         <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-85 h-37.5 animate-[anvilFloat_9s_ease-in-out_infinite] pointer-events-none">
           <div className="absolute left-1/2 bottom-5 -translate-x-1/2 w-70 h-11 rounded-full bg-[radial-gradient(closest-side,var(--shadow),transparent_76%)] blur-[6px]" />
           <div className="absolute left-1/2 top-11 -translate-x-1/2 w-46 h-25 bg-[linear-gradient(180deg,var(--rock1),var(--rock2))] [clip-path:polygon(5%_0,95%_0,80%_44%,60%_78%,50%_100%,40%_78%,20%_44%)] rounded-t-[40%]" />

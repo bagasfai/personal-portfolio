@@ -17,6 +17,7 @@ export default function Contact() {
   return (
     <section
       id="horizon"
+      aria-labelledby="horizon-heading"
       data-screen-label="Horizon"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-30"
     >
@@ -81,7 +82,10 @@ export default function Contact() {
           <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
             the sunset island
           </p>
-          <h2 className="mb-5 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(36px,5vw,60px)] leading-[1.03] tracking-[-0.5px] text-(--ink) text-balance">
+          <h2
+            id="horizon-heading"
+            className="mb-5 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(36px,5vw,60px)] leading-[1.03] tracking-[-0.5px] text-(--ink) text-balance"
+          >
             Let&apos;s build something <em className="italic">gentle</em>{" "}
             together.
           </h2>
@@ -91,14 +95,16 @@ export default function Contact() {
           </p>
           <div className="flex flex-wrap gap-3">
             <a
-              href="mailto:hello@bagaskara.dev"
+              href="mailto:bagasfai50@gmail.com"
               className="inline-flex items-center gap-2 py-2.75 px-4.5 rounded-full no-underline text-sm font-semibold text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-[10px]"
+              target="_blank"
             >
-              ✦ hello@bagaskara.dev
+              ✦ bagasfai50@gmail.com
             </a>
             <a
               href="https://github.com/bagasfai"
               target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 py-2.75 px-4.5 rounded-full no-underline text-sm font-semibold text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-[10px]"
             >
               GitHub
@@ -155,30 +161,42 @@ export default function Contact() {
                       setSent(true);
                     }}
                   >
-                    <label className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5">
+                    <label
+                      htmlFor="contact-name"
+                      className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5"
+                    >
                       YOUR NAME
                     </label>
                     <input
+                      id="contact-name"
                       type="text"
                       name="name"
                       required
                       placeholder="Who's drifting by?"
                       className={`sky-field ${fieldBase} mb-4`}
                     />
-                    <label className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5">
+                    <label
+                      htmlFor="contact-email"
+                      className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5"
+                    >
                       EMAIL
                     </label>
                     <input
+                      id="contact-email"
                       type="email"
                       name="email"
                       required
                       placeholder="where can I reach you?"
                       className={`sky-field ${fieldBase} mb-4`}
                     />
-                    <label className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5">
+                    <label
+                      htmlFor="contact-note"
+                      className="block text-xs font-bold tracking-[0.4px] text-(--ink-soft) mb-1.5"
+                    >
                       YOUR NOTE
                     </label>
                     <textarea
+                      id="contact-note"
                       rows={3}
                       name="note"
                       required

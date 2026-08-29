@@ -106,6 +106,7 @@ function Tower({ p }: { p: Project }) {
                 <a
                   href={p.demoLink}
                   target="_blank"
+                  rel="noopener noreferrer"
                   style={
                     {
                       "--live-bg": `linear-gradient(135deg,${p.c1},${p.c2})`,
@@ -121,6 +122,7 @@ function Tower({ p }: { p: Project }) {
                 <a
                   href={p.githubLink}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-none py-2.5 px-4 rounded-full no-underline text-[13px] font-bold text-(--ink) bg-(--glass-brd) border border-(--glass-brd)"
                 >
                   GitHub
@@ -144,6 +146,7 @@ export default function Projects() {
   return (
     <section
       id="creations"
+      aria-labelledby="creations-heading"
       data-screen-label="Creations"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-37.5"
     >
@@ -157,7 +160,7 @@ export default function Projects() {
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the floating city
         </p>
-        <h2 className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2 id="creations-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
           A skyline of things I&apos;ve <em className="italic">built.</em>
         </h2>
         <p className="mx-auto max-w-115 text-base leading-[1.7] text-(--ink-soft) text-pretty">

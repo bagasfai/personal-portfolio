@@ -33,7 +33,6 @@ export default function FloatingSky() {
 
   const { soundOn, toggleSound } = useAmbientSound();
 
-  // pointer motion values — never trigger a re-render
   const mvx = useMotionValue(0);
   const mvy = useMotionValue(0);
   const cx = useMotionValue(0);
@@ -53,17 +52,11 @@ export default function FloatingSky() {
     return () => window.removeEventListener("pointermove", onMove);
   }, [prefersReduced, mvx, mvy, cx, cy]);
 
-  // Rendered on the server so the curtain is the first thing painted. Server and client
-  // initial renders both produce `true`, so the trees match and hydration is clean. The
-  // skip decision is made before paint by the inline script in app/layout.tsx.
   const [showIntro, setShowIntro] = useState(true);
   const [heroEntered, setHeroEntered] = useState(false);
 
   useEffect(() => {
     if (document.documentElement.dataset.skyIntro === "0") {
-      // The inline script in app/layout.tsx already decided to skip, and CSS has hidden
-      // the curtain since before first paint. These calls only sync React with the DOM,
-      // so they cannot cause a visible change.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowIntro(false);
       setHeroEntered(true);
@@ -75,7 +68,7 @@ export default function FloatingSky() {
       try {
         sessionStorage.setItem(INTRO_STORAGE_KEY, "1");
       } catch {
-        // storage unavailable — intro will simply replay next load
+        // 
       }
     }, INTRO_TOTAL_MS);
     return () => clearTimeout(t);
@@ -93,9 +86,7 @@ export default function FloatingSky() {
       style={{ ...theme } as React.CSSProperties}
       className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
     >
-      <AnimatePresence>
-        {showIntro && <IntroCurtain />}
-      </AnimatePresence>
+      <AnimatePresence>{showIntro && <IntroCurtain />}</AnimatePresence>
 
       <SkyProvider value={skyValue}>
         <Atmosphere decor={decor} />
@@ -105,13 +96,15 @@ export default function FloatingSky() {
           soundOn={soundOn}
           toggleSound={toggleSound}
         />
-        <Hero entered={heroEntered} />
-        <About />
-        <Skills />
-        <Projects />
-        <Path />
-        <Blog />
-        <Contact />
+        <main id="content">
+          <Hero entered={heroEntered} />
+          <About />
+          <Skills />
+          <Projects />
+          <Path />
+          <Blog />
+          <Contact />
+        </main>
       </SkyProvider>
       <Footer />
     </div>

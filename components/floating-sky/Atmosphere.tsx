@@ -73,7 +73,10 @@ export default function Atmosphere({
   showBirds?: boolean;
 }) {
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div
+      aria-hidden="true"
+      className="fixed inset-0 z-0 overflow-hidden pointer-events-none"
+    >
       <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--sky-a)_0%,var(--sky-b)_44%,var(--sky-c)_100%)] [transition:background_1s_ease]" />
 
       <Blob
