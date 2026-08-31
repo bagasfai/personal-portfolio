@@ -10,8 +10,9 @@ export interface SkyContextValue {
   /** Raw pointer position in viewport px — for the cursor spotlight and crystal repel. */
   cx: MotionValue<number>;
   cy: MotionValue<number>;
-  night: boolean;
   reducedMotion: boolean;
+  /** True once the intro curtain has lifted, or immediately on the skip path. */
+  entered: boolean;
 }
 
 const SkyContext = createContext<SkyContextValue | null>(null);

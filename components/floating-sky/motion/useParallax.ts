@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransform } from "motion/react";
-import { useSky } from "./SkyContext";
+import { useSky } from "../SkyContext";
 
 /** Pointer parallax amplitude in px at factor 1 — matches the reference's `mouse * factor * 48`. */
 const AMP = 48;

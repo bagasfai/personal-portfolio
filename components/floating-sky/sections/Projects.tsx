@@ -1,49 +1,29 @@
-"use client";
-
-import { useMemo, useState } from "react";
-import { motion } from "motion/react";
-import { revealVariants, revealViewport } from "./motionVariants";
-import { getProjects, type Project } from "./data";
+import Reveal from "../motion/Reveal";
+import { getProjects } from "@/content/projects";
+import type { Project } from "@/lib/types";
 
 function Tower({ p }: { p: Project }) {
-  const [hovered, setHovered] = useState(false);
-
   return (
-    <motion.div
-      className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
+    <Reveal
       custom={p.i}
-      variants={revealVariants}
-      initial="hidden"
-      whileInView="show"
-      viewport={revealViewport}
-      whileHover={{ y: -20, scale: 1.015 }}
-      transition={{ type: "spring", stiffness: 200, damping: 24 }}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
       style={
         {
           "--tower-align": p.align,
           "--tower-lift": p.lift,
         } as React.CSSProperties
       }
+      className="tower relative [align-self:var(--tower-align)] mt-(--tower-lift)"
     >
-      <motion.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.55 }}
+      <div
         style={
           {
-            x: "-50%",
             "--glow-bg": `radial-gradient(closest-side, ${p.glow}, transparent 74%)`,
           } as React.CSSProperties
         }
-        className="absolute left-1/2 -bottom-6.5 w-[78%] h-15 rounded-full pointer-events-none blur-xs bg-(image:--glow-bg)"
+        className="tower-glow absolute left-1/2 -bottom-6.5 w-[78%] h-15 -translate-x-1/2 rounded-full pointer-events-none blur-xs bg-(image:--glow-bg)"
       />
 
-      <motion.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-        className="absolute inset-0 pointer-events-none z-6"
-      >
+      <div className="tower-badges absolute inset-0 pointer-events-none z-6">
         {p.badges.map((b) => (
           <div
             key={b.name}
@@ -53,14 +33,14 @@ function Tower({ p }: { p: Project }) {
                 "--badge-anim": `badgeOrbit ${b.dur} linear ${b.delay} infinite`,
               } as React.CSSProperties
             }
-            className="absolute left-1/2 top-1/2 animate-(--badge-anim)"
+            className="badge-orbit absolute left-1/2 top-1/2 animate-(--badge-anim)"
           >
-            <span className="inline-block -translate-x-1/2 -translate-y-1/2 py-1 px-2.5 rounded-full text-[11px] font-bold whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-sm shadow-[0_6px_16px_rgba(110,100,180,0.2)]">
+            <span className="inline-block -translate-x-1/2 -translate-y-1/2 py-1 px-2.5 rounded-full text-[11px] font-bold whitespace-nowrap text-(--ink) bg-(--glass) border border-(--glass-brd) shadow-[0_6px_16px_rgba(110,100,180,0.2)]">
               {b.name}
             </span>
           </div>
         ))}
-      </motion.div>
+      </div>
 
       <div
         style={
@@ -83,7 +63,7 @@ function Tower({ p }: { p: Project }) {
             <span className="font-[family-name:var(--font-instrument-serif),serif] text-[44px] text-white opacity-90 [text-shadow:0_3px_12px_rgba(0,0,0,0.15)]">
               {p.glyph}
             </span>
-            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40 backdrop-blur-[6px]">
+            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40">
               {p.tag}
             </span>
             <span className="absolute top-3 right-3.5 text-[11px] font-semibold text-white opacity-85">
@@ -97,11 +77,7 @@ function Tower({ p }: { p: Project }) {
             <p className="mb-4.5 text-sm leading-[1.6] text-(--ink-soft) min-h-16.5 text-pretty">
               {p.desc}
             </p>
-            <motion.div
-              animate={hovered ? { opacity: 1, y: 0 } : { opacity: 0.55, y: 6 }}
-              transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
-              className="flex gap-2.5"
-            >
+            <div className="tower-links flex gap-2.5">
               {p.demoLink && (
                 <a
                   href={p.demoLink}
@@ -128,7 +104,7 @@ function Tower({ p }: { p: Project }) {
                   GitHub
                 </a>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
         <div className="relative h-11 -mt-0.5">
@@ -136,12 +112,12 @@ function Tower({ p }: { p: Project }) {
           <div className="absolute left-1/2 -top-1.25 -translate-x-1/2 w-[74%] h-4 rounded-full bg-[linear-gradient(180deg,var(--grass1),var(--grass2))]" />
         </div>
       </div>
-    </motion.div>
+    </Reveal>
   );
 }
 
 export default function Projects() {
-  const projects = useMemo(() => getProjects(), []);
+  const projects = getProjects();
 
   return (
     <section
@@ -150,24 +126,21 @@ export default function Projects() {
       data-screen-label="Creations"
       className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-37.5"
     >
-      <motion.div
-        variants={revealVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={revealViewport}
-        className="text-center max-w-165 mb-14"
-      >
+      <Reveal className="text-center max-w-165 mb-14">
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
           the floating city
         </p>
-        <h2 id="creations-heading" className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance">
+        <h2
+          id="creations-heading"
+          className="mb-4 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(34px,4.8vw,56px)] leading-[1.05] tracking-[-0.4px] text-(--ink) text-balance"
+        >
           A skyline of things I&apos;ve <em className="italic">built.</em>
         </h2>
         <p className="mx-auto max-w-115 text-base leading-[1.7] text-(--ink-soft) text-pretty">
           Every tower is a project, moored to its own scrap of land. Hover to
           raise one into the light and see it up close.
         </p>
-      </motion.div>
+      </Reveal>
 
       <div
         id="city"

@@ -283,3 +283,194 @@ html {
     left: 16px !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Hover and focus affordances.
+
+   These used to be React state driving Motion animations, which meant a hover
+   re-rendered the card. They are pure presentation, so CSS owns them: hovering
+   now costs nothing on the main thread and never touches React.
+
+   The :focus-within pairings are new. The old whileHover implementation was
+   mouse-only, so keyboard users never saw the tooltips or the link row.
+
+   `!important` on the three hover transforms is load-bearing, not decoration.
+   .tower, .journal-card, and .step-card are Motion reveal targets, and once the
+   reveal finishes Motion leaves `transform: none` on the element as an inline
+   style. An inline style outranks a stylesheet rule, so without !important the
+   lift silently does nothing and only the box-shadow lands. Same reason the
+   [data-reveal] override in app/globals.css needs it. The transition still
+   animates normally, because transitions fire on computed-value changes
+   regardless of origin.
+   --------------------------------------------------------------------------- */
+
+/* Project towers — glow, badges, and link row respond to hovering the whole card. */
+.tower .tower-glow,
+.tower .tower-badges {
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.tower:hover .tower-glow,
+.tower:hover .tower-badges,
+.tower:focus-within .tower-glow,
+.tower:focus-within .tower-badges {
+  opacity: 1;
+}
+.tower .tower-links {
+  opacity: 0.55;
+  transform: translateY(6px);
+  transition:
+    opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tower:hover .tower-links,
+.tower:focus-within .tower-links {
+  opacity: 1;
+  transform: translateY(0);
+}
+.tower {
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s ease;
+}
+.tower:hover {
+  transform: translateY(-20px) scale(1.015) !important;
+}
+
+/* Crystals — tooltip on hover or keyboard focus. */
+.crystal .crystal-tip {
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition:
+    opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.crystal:hover .crystal-tip,
+.crystal:focus-within .crystal-tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.crystal:hover .crystal-gem,
+.crystal:focus-within .crystal-gem {
+  animation-play-state: paused;
+}
+
+/* Journal cards and step cards — simple lift. */
+.journal-card,
+.step-card {
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.5s ease;
+}
+.journal-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 30px 60px rgba(110, 100, 180, 0.3);
+}
+.step-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 30px 60px rgba(110, 100, 180, 0.32);
+}
+
+/* ---------------------------------------------------------------------------
+   Step stones.
+
+   These used to be two Motion `animate` props per stone, driven by a `lit` state
+   that each stone derived from its own scrollY subscription and a
+   getBoundingClientRect() call — N forced layouts per scroll frame. PathTrail now
+   toggles `.is-lit` from a single IntersectionObserver and the appearance is CSS.
+
+   Note the background does not interpolate: a colour cannot transition to a
+   gradient. It snaps, exactly as the Motion version did — that mismatch is what
+   made Motion log "is not an animatable color" on every step.
+   --------------------------------------------------------------------------- */
+.step-stone {
+  background: var(--glass);
+  box-shadow:
+    0 12px 26px rgba(110, 100, 180, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition:
+    background 0.6s ease,
+    box-shadow 0.6s ease;
+}
+[data-step-stone].is-lit .step-stone {
+  background: linear-gradient(135deg, #b9c6ff, #d9bcff 55%, #ffc6d8);
+  box-shadow:
+    0 12px 30px rgba(150, 130, 230, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.step-halo {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+[data-step-stone].is-lit .step-halo {
+  opacity: 0.8;
+}
+
+/* ---------------------------------------------------------------------------
+   Animation cost policy.
+
+   useReducedMotion() gated Motion, but all 25 CSS keyframes ignored the
+   preference entirely — an accessibility defect as much as a performance one.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  /* Decorative, infinite, purely atmospheric — stop entirely. */
+  .cloud,
+  .mote,
+  .star,
+  .bird,
+  .bird-wing,
+  .leaf,
+  .paper,
+  .blob,
+  .grain,
+  .rays,
+  .crystal-gem,
+  .lantern-sway,
+  .lantern-glow,
+  .badge-orbit {
+    animation: none !important;
+  }
+
+  /* Structural float animations — hold at rest rather than removing, so the
+     elements settle at their first keyframe and layout positions stay identical
+     to the animated case. */
+  [class*="animate-"] {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* 70 stars run `twinkle` forever at opacity 0 in daylight. Composes with the
+   data-theme attribute, so the DOM is untouched and hydration is unaffected. */
+html[data-theme="day"] .star {
+  animation-play-state: paused;
+}
+
+/* Density on small screens. Generating fewer elements would desynchronise the
+   client PRNG from the prerendered HTML — the exact mismatch the seeded
+   generator exists to prevent — so hide the surplus instead. */
+@media (max-width: 720px) {
+  .star:nth-child(n + 31) {
+    display: none;
+  }
+  .mote:nth-child(n + 21) {
+    display: none;
+  }
+  .cloud:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+/* will-change buys a GPU layer; holding one per crystal permanently costs memory
+   whether or not anything is moving. Scope it to the moment it matters. */
+.crystal {
+  will-change: auto;
+}
+.crystal:hover,
+.crystal:focus-within {
+  will-change: transform;
+}

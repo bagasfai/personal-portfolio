@@ -1,25 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  motion,
+  m,
   AnimatePresence,
   useScroll,
   useMotionValueEvent,
   useReducedMotion,
 } from "motion/react";
-import { NAV_ITEMS } from "./data";
+import { NAV_ITEMS } from "@/content/nav";
+import { applyTheme, type ThemeName } from "@/lib/theme";
 
 const SECTION_IDS = NAV_ITEMS.map((n) => n.id);
 
 export default function Compass({
-  night,
-  toggleNight,
   soundOn,
   toggleSound,
 }: {
-  night: boolean;
-  toggleNight: () => void;
   soundOn: boolean;
   toggleSound: () => void;
 }) {
@@ -29,6 +26,28 @@ export default function Compass({
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const prefersReduced = useReducedMotion();
+
+  // The theme itself lives on <html data-theme>, set before first paint. This state
+  // exists only so the button can show the right glyph and label — nothing else in the
+  // tree re-renders when the sky changes.
+  const [theme, setTheme] = useState<ThemeName>("day");
+
+  useEffect(() => {
+    const current = document.documentElement.dataset.theme;
+    // Sync React with what the pre-paint script already decided. This cannot cause a
+    // visible change — the DOM attribute is already correct.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTheme(current === "night" ? "night" : "day");
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    // The attribute is the source of truth, so read it rather than React state — and
+    // apply outside the updater, which must stay free of side effects.
+    const next: ThemeName =
+      document.documentElement.dataset.theme === "night" ? "day" : "night";
+    applyTheme(next);
+    setTheme(next);
+  }, []);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const isCompact = latest > 70;
@@ -87,19 +106,20 @@ export default function Compass({
       : "font-medium text-(--ink-soft) bg-transparent";
 
   return (
-    <motion.nav
+    <m.nav
       ref={navRef}
       id="compass"
-      animate={{
-        scale: compact ? 0.93 : 1,
-        padding: compact ? "5px 7px" : "7px 9px",
-        boxShadow: compact
-          ? "0 10px 30px rgba(70,66,120,.24)"
-          : "0 12px 34px rgba(70,66,120,.16)",
-      }}
+      // Only `scale` is animated per frame now. Padding was animating layout and the
+      // shadow was animating paint, 0.55s of both on every scroll past 70px; the
+      // padding is fixed and the shadow swaps by class with a plain CSS transition.
+      animate={{ scale: compact ? 0.93 : 1 }}
       transition={{ duration: 0.55, ease: [0.2, 0.8, 0.2, 1] }}
       style={{ x: "-50%" }}
-      className="fixed top-5 left-1/2 z-60 flex items-center gap-1 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-[20px] backdrop-saturate-[1.35] max-w-[94vw] [transition:background_.8s_ease,border-color_.8s_ease]"
+      className={`fixed top-5 left-1/2 z-60 flex items-center gap-1 rounded-full py-[7px] px-[9px] bg-(--glass) border border-(--glass-brd) backdrop-blur-[20px] backdrop-saturate-[1.35] max-w-[94vw] [transition:background_.8s_ease,border-color_.8s_ease,box-shadow_.55s_ease] ${
+        compact
+          ? "shadow-[0_10px_30px_rgba(70,66,120,.24)]"
+          : "shadow-[0_12px_34px_rgba(70,66,120,.16)]"
+      }`}
     >
       <span className="font-[family-name:var(--font-caveat),cursive] font-bold text-[22px] leading-none pr-2.5 pl-2 text-(--ink) whitespace-nowrap">
         ✦&nbsp;Bagaskara
@@ -108,7 +128,7 @@ export default function Compass({
 
       <div className="hidden lg:flex items-center gap-1">
         {NAV_ITEMS.map((n) => (
-          <motion.a
+          <m.a
             key={n.id}
             href={`#${n.id}`}
             aria-current={active === n.id ? "true" : undefined}
@@ -116,7 +136,7 @@ export default function Compass({
             className={`no-underline px-3 py-1.5 rounded-full text-[13px] tracking-[0.2px] cursor-pointer whitespace-nowrap [transition:background_.35s_ease,color_.35s_ease] ${linkClass(n.id)}`}
           >
             {n.label}
-          </motion.a>
+          </m.a>
         ))}
       </div>
 
@@ -141,16 +161,18 @@ export default function Compass({
         </span>
       </button>
 
-      <motion.button
-        onClick={toggleNight}
+      <m.button
+        onClick={toggleTheme}
         title="Shift the sky"
-        aria-label={night ? "Switch to day sky" : "Switch to night sky"}
+        aria-label={
+          theme === "night" ? "Switch to day sky" : "Switch to night sky"
+        }
         whileHover={{ rotate: 28, scale: 1.08 }}
         transition={{ duration: 0.5, ease: [0.2, 0.8, 0.2, 1] }}
         className="w-8.5 h-8.5 shrink-0 border-0 rounded-full cursor-pointer text-[15px] flex items-center justify-center text-(--ink) bg-(--glass-brd)"
       >
-        {night ? "☀" : "☾"}
-      </motion.button>
+        {theme === "night" ? "☀" : "☾"}
+      </m.button>
 
       <button
         onClick={() => setMenuOpen((prev) => !prev)}
@@ -180,7 +202,7 @@ export default function Compass({
 
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
+          <m.div
             id="compass-menu"
             key="compass-menu"
             initial={
@@ -220,9 +242,9 @@ export default function Compass({
                 {n.label}
               </a>
             ))}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </m.nav>
   );
 }

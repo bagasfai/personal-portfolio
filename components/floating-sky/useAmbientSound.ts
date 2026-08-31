@@ -19,6 +19,10 @@ function getAudioContextCtor(): typeof AudioContext | null {
 const FADE_IN_S = 2.4;
 const FADE_OUT_S = 0.7;
 
+/**
+ * Synthesized ambient soundscape (chord pad + filtered breeze noise) — no audio file.
+ * Built lazily on first enable, closed on unmount. Mirrors the reference's Web Audio graph.
+ */
 export function useAmbientSound() {
   const [soundOn, setSoundOn] = useState(false);
   const soundOnRef = useRef(false);
@@ -140,6 +144,9 @@ export function useAmbientSound() {
       );
 
       if (!on) {
+        // Let the ramp finish, then stop the graph entirely. Without this the
+        // oscillators and noise source keep running for the rest of the session,
+        // costing CPU and battery to produce silence.
         suspendTimerRef.current = setTimeout(
           () => {
             rig.ctx.suspend().catch(() => {

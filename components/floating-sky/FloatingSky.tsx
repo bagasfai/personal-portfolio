@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   AnimatePresence,
   useMotionValue,
@@ -8,28 +8,35 @@ import {
   useSpring,
 } from "motion/react";
 import { SkyProvider } from "./SkyContext";
+import LazyMotionProvider from "./motion/LazyMotionProvider";
 import { useAmbientSound } from "./useAmbientSound";
-import Atmosphere from "./Atmosphere";
+import Atmosphere from "./atmosphere/Atmosphere";
 import Compass from "./Compass";
 import IntroCurtain from "./IntroCurtain";
-import Hero from "./Hero";
-import About from "./About";
-import Skills from "./Skills";
-import Projects from "./Projects";
-import Path from "./Path";
-import Blog from "./Blog";
-import Contact from "./Contact";
-import Footer from "./Footer";
-import { createAtmosphereDecor, THEME_DAY, THEME_NIGHT } from "./data";
+import {
+  createClouds,
+  createParticles,
+  createStars,
+  createBirds,
+} from "@/lib/decor";
 import { INTRO_STORAGE_KEY, INTRO_TOTAL_MS } from "./introTiming";
 import "./floating-sky.css";
 
-export default function FloatingSky() {
-  const decor = useMemo(() => createAtmosphereDecor(), []);
+export default function FloatingSky({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const decor = useMemo(
+    () => ({
+      clouds: createClouds(),
+      particles: createParticles(),
+      stars: createStars(),
+      birds: createBirds(),
+    }),
+    [],
+  );
   const prefersReduced = useReducedMotion();
-
-  const [night, setNight] = useState(false);
-  const toggleNight = useCallback(() => setNight((n) => !n), []);
 
   const { soundOn, toggleSound } = useAmbientSound();
 
@@ -75,38 +82,30 @@ export default function FloatingSky() {
   }, []);
 
   const skyValue = useMemo(
-    () => ({ sx, sy, cx, cy, night, reducedMotion: Boolean(prefersReduced) }),
-    [sx, sy, cx, cy, night, prefersReduced],
+    () => ({
+      sx,
+      sy,
+      cx,
+      cy,
+      reducedMotion: Boolean(prefersReduced),
+      entered: heroEntered,
+    }),
+    [sx, sy, cx, cy, prefersReduced, heroEntered],
   );
 
-  const theme = night ? THEME_NIGHT : THEME_DAY;
-
   return (
-    <div
-      style={{ ...theme } as React.CSSProperties}
-      className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]"
-    >
-      <AnimatePresence>{showIntro && <IntroCurtain />}</AnimatePresence>
+    <LazyMotionProvider>
+      <div className="relative w-full min-h-screen font-[family-name:var(--font-manrope),Manrope,system-ui,sans-serif] text-(--ink) bg-(--sky-c) overflow-x-hidden [transition:color_.8s_ease,background_.8s_ease]">
+        <AnimatePresence>
+          {showIntro && <IntroCurtain />}
+        </AnimatePresence>
 
-      <SkyProvider value={skyValue}>
-        <Atmosphere decor={decor} />
-        <Compass
-          night={night}
-          toggleNight={toggleNight}
-          soundOn={soundOn}
-          toggleSound={toggleSound}
-        />
-        <main id="content">
-          <Hero entered={heroEntered} />
-          <About />
-          <Skills />
-          <Projects />
-          <Path />
-          <Blog />
-          <Contact />
-        </main>
-      </SkyProvider>
-      <Footer />
-    </div>
+        <SkyProvider value={skyValue}>
+          <Atmosphere decor={decor} />
+          <Compass soundOn={soundOn} toggleSound={toggleSound} />
+          {children}
+        </SkyProvider>
+      </div>
+    </LazyMotionProvider>
   );
 }

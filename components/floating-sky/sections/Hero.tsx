@@ -1,28 +1,7 @@
-"use client";
-
-import { motion } from "motion/react";
-import { useParallax } from "./useParallax";
-import { EASE_REVEAL } from "./motionVariants";
-
-const containerVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.13, delayChildren: 0.18 } },
-};
-
-const textVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 1.1, ease: EASE_REVEAL } },
-};
-
-const islandVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.96 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 1.2, ease: EASE_REVEAL },
-  },
-};
+import Parallax from "../motion/Parallax";
+import HeroStagger from "./HeroStagger";
+import HeroItem from "./HeroItem";
+import HeroLink from "./HeroLink";
 
 function AvatarSlot() {
   return (
@@ -34,10 +13,7 @@ function AvatarSlot() {
   );
 }
 
-export default function Hero({ entered }: { entered: boolean }) {
-  const island = useParallax(0.7);
-  const companion = useParallax(1.7);
-
+export default function Hero() {
   return (
     <section
       id="hero"
@@ -45,35 +21,24 @@ export default function Hero({ entered }: { entered: boolean }) {
       data-screen-label="Hero"
       className="relative z-2 min-h-screen flex items-center justify-center pt-30 px-[7vw] pb-20"
     >
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate={entered ? "show" : "hidden"}
-        className="w-full max-w-295 flex flex-wrap items-center justify-between gap-12"
-      >
+      <HeroStagger>
         {/* text */}
         <div className="flex-[1_1_380px] min-w-75">
-          <motion.div
-            variants={textVariants}
-            data-reveal
-            className="inline-flex items-center gap-2.25 py-1.75 px-3.75 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-md text-[12.5px] font-semibold tracking-[0.4px] text-(--ink-soft) mb-6.5"
-          >
+          <HeroItem className="inline-flex items-center gap-2.25 py-1.75 px-3.75 rounded-full bg-(--glass) border border-(--glass-brd) backdrop-blur-md text-[12.5px] font-semibold tracking-[0.4px] text-(--ink-soft) mb-6.5">
             <span className="w-1.75 h-1.75 rounded-full bg-[#8fd6a8] shadow-[0_0_8px_#8fd6a8] animate-[twinkle_3s_ease-in-out_infinite]" />
             FULL-STACK DEVELOPER · BUILDING ABOVE THE CLOUDS
-          </motion.div>
+          </HeroItem>
 
-          <motion.p
-            variants={textVariants}
-            data-reveal
+          <HeroItem
+            as="p"
             className="mb-1.5 font-[family-name:var(--font-caveat),cursive] text-[28px] font-semibold text-(--ink-soft)"
           >
             Hi, I&apos;m Bagaskara —
-          </motion.p>
+          </HeroItem>
 
-          <motion.h1
+          <HeroItem
+            as="h1"
             id="hero-heading"
-            variants={textVariants}
-            data-reveal
             className="m-0 font-[family-name:var(--font-instrument-serif),Georgia,serif] font-normal text-[clamp(46px,7vw,88px)] leading-[1.02] tracking-[-0.5px] text-(--ink) text-balance"
           >
             I build{" "}
@@ -82,64 +47,46 @@ export default function Hero({ entered }: { entered: boolean }) {
             </em>
             , thoughtful software, somewhere{" "}
             <em className="italic">above&nbsp;the&nbsp;clouds.</em>
-          </motion.h1>
+          </HeroItem>
 
-          <motion.p
-            variants={textVariants}
-            data-reveal
+          <HeroItem
+            as="p"
             className="mt-6.5 max-w-110 text-[17px] leading-[1.7] font-normal text-(--ink-soft) text-pretty"
           >
             A developer who cares about the quiet details — the ones you feel
             before you notice. Come drift through a few things I&apos;ve made.
-          </motion.p>
+          </HeroItem>
 
-          <motion.div
-            variants={textVariants}
-            data-reveal
-            className="flex flex-wrap gap-3.5 mt-8.5"
-          >
-            <motion.a
+          <HeroItem className="flex flex-wrap gap-3.5 mt-8.5">
+            <HeroLink
               href="#my-story"
-              whileHover={{ y: -3, scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              scaleOnHover
               className="inline-flex items-center gap-2.5 py-3.75 px-6.75 rounded-full no-underline font-semibold text-[15px] text-white bg-[linear-gradient(135deg,#9db4ff,#c9a6ff_55%,#ffb3c8)] shadow-[0_14px_32px_rgba(150,140,225,0.4),inset_0_1px_0_rgba(255,255,255,0.5)]"
             >
               Wander my work&nbsp;<span className="text-[17px]">→</span>
-            </motion.a>
-            <motion.a
+            </HeroLink>
+            <HeroLink
               href="#horizon"
-              whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 300, damping: 22 }}
               className="inline-flex items-center gap-2 py-3.75 px-6.5 rounded-full no-underline font-semibold text-[15px] text-(--ink) bg-(--glass) border border-(--glass-brd) backdrop-blur-md"
             >
               Say hello
-            </motion.a>
-          </motion.div>
+            </HeroLink>
+          </HeroItem>
 
-          <motion.div
-            variants={textVariants}
-            data-reveal
-            className="flex items-center gap-2.5 mt-11 text-(--ink-soft) text-[12.5px] tracking-[0.5px] font-medium"
-          >
+          <HeroItem className="flex items-center gap-2.5 mt-11 text-(--ink-soft) text-[12.5px] tracking-[0.5px] font-medium">
             <span className="inline-block w-5.5 h-8.5 rounded-xl border-[1.5px] border-(--ink-soft) opacity-60 relative">
               <span className="absolute left-1/2 top-1.75 -translate-x-1/2 w-0.75 h-1.75 rounded-xs bg-(--ink-soft) animate-[bob_1.8s_ease-in-out_infinite]" />
             </span>
             KEEP DRIFTING
-          </motion.div>
+          </HeroItem>
         </div>
 
         {/* floating island + avatar */}
-        <motion.div
-          variants={islandVariants}
-          data-reveal
+        <HeroItem
+          variant="island"
           className="flex-[0_1_440px] min-w-75 h-120 relative"
         >
-          <motion.div
-            style={{ x: island.x, y: island.y }}
-            className="absolute inset-0"
-          >
+          <Parallax factor={0.7} className="absolute inset-0">
             <div className="absolute inset-0 animate-[floatA_9s_ease-in-out_infinite]">
               <div className="absolute left-1/2 bottom-8.5 w-72.5 h-16 -translate-x-1/2 bg-[radial-gradient(closest-side,var(--shadow),transparent_76%)] blur-[7px]" />
               <div className="absolute left-1/2 top-53.5 -translate-x-1/2 w-59 h-57.5 bg-[linear-gradient(180deg,var(--rock1),var(--rock2))] [clip-path:polygon(3%_0,97%_0,88%_30%,74%_52%,58%_78%,50%_100%,42%_78%,26%_52%,12%_30%)] rounded-t-[44%] shadow-[inset_14px_0_24px_rgba(255,255,255,0.18),inset_-18px_0_26px_rgba(0,0,0,0.12)]" />
@@ -168,20 +115,20 @@ export default function Hero({ entered }: { entered: boolean }) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </Parallax>
 
           {/* companion island */}
-          <motion.div
-            style={{ x: companion.x, y: companion.y }}
+          <Parallax
+            factor={1.7}
             className="absolute left-[-4%] bottom-[8%] w-22.5 h-17.5"
           >
             <div className="animate-[floatB_7s_ease-in-out_infinite_1s]">
               <div className="absolute left-1/2 top-6.5 -translate-x-1/2 w-16 h-15 bg-[linear-gradient(180deg,var(--rock1),var(--rock2))] [clip-path:polygon(6%_0,94%_0,72%_60%,50%_100%,28%_60%)] rounded-t-[40%]" />
               <div className="absolute left-1/2 top-3.5 -translate-x-1/2 w-20.5 h-8 rounded-full bg-[linear-gradient(180deg,var(--grass1),var(--grass2))]" />
             </div>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </Parallax>
+        </HeroItem>
+      </HeroStagger>
     </section>
   );
 }
