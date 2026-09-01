@@ -9,7 +9,7 @@ export default function Contact() {
       id="horizon"
       aria-labelledby="horizon-heading"
       data-screen-label="Horizon"
-      className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-30"
+      className="relative z-2 min-h-screen flex flex-col items-center justify-center px-[6vw] pb-22"
     >
       <div className="absolute left-1/2 bottom-0 -translate-x-1/2 w-[120%] h-[70%] bg-[radial-gradient(ellipse_at_50%_100%,var(--sunset),transparent_68%)] pointer-events-none z-0" />
 

@@ -91,6 +91,7 @@ export interface Project {
   i: number;
   name: string;
   glyph: string;
+  image: string;
   tag: string;
   desc: string;
   c1: string;

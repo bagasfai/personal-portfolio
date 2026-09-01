@@ -5,7 +5,7 @@ const STEP_BASE = [
     period: "Nov 2025 — NOW · 2026",
     place: "Herca Group",
     role: "Full-Stack Developer",
-    desc: "Placeholder for the years you found your stride. Swap in the wins and the lessons whenever you like.",
+    desc: "Now: an HR platform where mobile attendance meets face recognition and GPS, payroll runs end-to-end, and deployment lives in Docker. Alongside it — an ERP built in Yii to keep sales, warehouses, and finances in sync, and a multi-tenant billing system for aesthetic clinics handling POS, inventory, and commissions across branches.",
     tags: [
       "TypeScript",
       "React Native",
@@ -23,7 +23,7 @@ const STEP_BASE = [
     period: "Oct 2023 — Aug 2025",
     place: "PT Satria Digital Sejahtera",
     role: "Full-Stack Developer",
-    desc: "The first stone. A gentle note about starting out, the curiosity that carried you, the first thing that shipped.",
+    desc: "Where the stride began — breaking HR and asset management into microservices, shipping a React Native app for real-time attendance, and building an e-commerce platform's storefront and dashboards in Livewire and Alpine. In between, a remuneration app that turned payroll and cash advances into something people could actually trust.",
     tags: [
       "JavaScript",
       "APIs",
@@ -40,6 +40,15 @@ const STEP_BASE = [
     ],
     accent: "#d69a4a",
     glyph: "✧",
+  },
+  {
+    period: "Aug 2023 — Oct 2023",
+    place: "PT Penukal Integritas Sejahtera",
+    role: "Full-Stack Developer",
+    desc: "Two builds from scratch — a point-of-sale system pairing a responsive HTML, CSS, and JavaScript frontend with a Laravel and MySQL backend, and a custom company profile site coded from the ground up to give the business its first real presence online.",
+    tags: ["HTML", "CSS", "JavaScript", "PHP", "Laravel", "MySQL"],
+    accent: "#4a9ad6",
+    glyph: "◆",
   },
 ];
 

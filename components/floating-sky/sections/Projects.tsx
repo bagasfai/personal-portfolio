@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Reveal from "../motion/Reveal";
 import { getProjects } from "@/content/projects";
 import type { Project } from "@/lib/types";
@@ -51,22 +52,29 @@ function Tower({ p }: { p: Project }) {
         className="relative z-4 animate-(--tower-anim)"
       >
         <div className="rounded-t-[26px] rounded-b-[22px] overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.25] shadow-[0_26px_54px_rgba(110,100,180,0.26),inset_0_1px_0_rgba(255,255,255,0.6)]">
-          <div
-            style={
-              {
-                "--header-bg": `linear-gradient(150deg, ${p.c1}, ${p.c2})`,
-              } as React.CSSProperties
-            }
-            className="relative h-37.5 flex items-center justify-center overflow-hidden bg-(image:--header-bg)"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,255,255,0.45),transparent_55%)]" />
-            <span className="font-[family-name:var(--font-instrument-serif),serif] text-[44px] text-white opacity-90 [text-shadow:0_3px_12px_rgba(0,0,0,0.15)]">
+          <div className="relative h-37.5 overflow-hidden bg-(--rock2)">
+            <Image
+              src={p.image}
+              alt={`${p.name} homepage screenshot`}
+              fill
+              sizes="(min-width: 1024px) 320px, 90vw"
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.45)_0%,rgba(0,0,0,0.08)_32%,rgba(0,0,0,0.02)_55%,rgba(0,0,0,0.42)_100%)]" />
+            <span
+              style={
+                {
+                  "--glyph-bg": `linear-gradient(135deg, ${p.c1}, ${p.c2})`,
+                } as React.CSSProperties
+              }
+              className="absolute left-3.5 bottom-3 flex items-center justify-center w-9 h-9 rounded-full font-[family-name:var(--font-instrument-serif),serif] text-lg text-white bg-(image:--glyph-bg) shadow-[0_4px_12px_rgba(0,0,0,0.25)]"
+            >
               {p.glyph}
             </span>
-            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40">
+            <span className="absolute top-3 left-3.5 py-1 px-2.75 rounded-full text-[10.5px] font-bold tracking-[0.5px] text-white bg-white/22 border border-white/40 backdrop-blur-sm">
               {p.tag}
             </span>
-            <span className="absolute top-3 right-3.5 text-[11px] font-semibold text-white opacity-85">
+            <span className="absolute top-3 right-3.5 text-[11px] font-semibold text-white opacity-85 [text-shadow:0_1px_4px_rgba(0,0,0,0.4)]">
               {p.year}
             </span>
           </div>
@@ -124,7 +132,7 @@ export default function Projects() {
       id="creations"
       aria-labelledby="creations-heading"
       data-screen-label="Creations"
-      className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-37.5"
+      className="relative z-2 min-h-screen flex flex-col items-center justify-center px-[6vw] pb-29.5"
     >
       <Reveal className="text-center max-w-165 mb-14">
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">

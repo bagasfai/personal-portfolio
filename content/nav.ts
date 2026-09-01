@@ -6,6 +6,6 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "workshop", label: "Workshop" },
   { id: "creations", label: "Creations" },
   { id: "my-journey", label: "My Journey" },
-  { id: "journal", label: "Journal" },
+  // { id: "journal", label: "Journal" }, // no blog posts yet
   { id: "horizon", label: "Horizon" },
 ];

@@ -11,7 +11,7 @@ export default function Path() {
       id="my-journey"
       aria-labelledby="journey-heading"
       data-screen-label="My Journey"
-      className="relative z-2 min-h-screen flex flex-col items-center pt-32.5 px-[6vw] pb-37.5"
+      className="relative z-2 min-h-screen flex flex-col items-center px-[6vw] pb-29.5"
     >
       <Reveal className="text-center max-w-165 mb-17.5">
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">

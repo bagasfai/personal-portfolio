@@ -1,73 +1,77 @@
 import type { Project } from "@/lib/types";
 
-const PROJECT_BASE = [
+const PROJECT_BASE: {
+  name: string;
+  glyph: string;
+  image: string;
+  tag: string;
+  desc: string;
+  c1: string;
+  c2: string;
+  glow: string;
+  badges: string[];
+  demoLink?: string;
+  githubLink?: string;
+}[] = [
   {
-    name: "Project One",
-    glyph: "✦",
-    tag: "WEB APP",
-    desc: "A placeholder for something you built — swap in the story, the stack, and the links when you decide.",
-    c1: "#a9c2ff",
-    c2: "#6f7fd6",
-    glow: "rgba(140,160,255,.4)",
-    badges: ["React", "Node", "Postgres"],
-    demoLink: "https://example.com",
-    githubLink: "https://example.com",
-  },
-  {
-    name: "Project Two",
-    glyph: "❋",
+    name: "Cargo",
+    glyph: "✥",
+    image: "/projects/cargo.png",
     tag: "PLATFORM",
-    desc: "Room for a favourite build. Describe the problem, the shape of the solution, and what felt good about it.",
-    c1: "#a8e6c8",
-    c2: "#4fa880",
-    glow: "rgba(120,220,170,.4)",
-    badges: ["Next.js", "GraphQL"],
-    demoLink: "https://example.com",
-    githubLink: "https://example.com",
+    desc: "A logistics platform for a cargo expedition company — a quiet quote-checker and blog out front, a full dashboard in back for managing orders, pricing by province down to village, and content.",
+    c1: "#ffb199",
+    c2: "#c9553f",
+    glow: "rgba(255,150,120,.4)",
+    badges: ["Laravel", "MySQL", "Alpine.js", "Tailwind"],
+    githubLink: "https://github.com/bagasfai/cargo",
   },
   {
-    name: "Project Three",
+    name: "Volunera",
+    glyph: "❋",
+    image: "/projects/volunera.png",
+    tag: "PLATFORM",
+    desc: "A place where a kid stuck on algebra gets matched with a volunteer who actually wants to explain it. Book a free slot, hop on a call, done — no payment screen, no sales funnel, just a fox mascot and a calendar.",
+    c1: "#fde3c4",
+    c2: "#1f6f5c",
+    glow: "rgba(31,111,92,.35)",
+    badges: ["Next.js", "Supabase", "Tailwind", "TypeScript"],
+    githubLink: "https://github.com/bagasfai/volunera",
+  },
+  {
+    name: "mesoestetic",
+    glyph: "❊",
+    image: "/projects/mesoestetic.png",
+    demoLink: "https://mesoestetic.co.id",
+    tag: "MARKETING SITE",
+    desc: "A skincare brand's front door, rebuilt for someone who reads product pages on a treatment-room tablet as often as a phone on the bus. Every serum gets its own quiet, clinical-white stage — the products do the talking.",
+    c1: "#eae7e1",
+    c2: "#4a4540",
+    glow: "rgba(80,70,60,.3)",
+    badges: ["Next.js", "React", "Tailwind"],
+  },
+  {
+    name: "Herca",
     glyph: "✺",
-    tag: "MOBILE",
-    desc: "Another empty tower waiting for a real project. Keep the copy warm and human — say what it feels like to use.",
-    c1: "#ffc9dd",
-    c2: "#d66f9a",
-    glow: "rgba(255,150,195,.4)",
-    badges: ["React Native", "AWS", "TS"],
-    githubLink: "https://example.com",
+    image: "/projects/herca.png",
+    demoLink: "https://herca.id/",
+    tag: "STOREFRONT",
+    desc: "Storefront for a medical aesthetics equipment company — browse machines and skincare by category, dig into product pages, drop items in a cart, and send a quotation request straight through. Feels less like a catalog, more like a sales rep who already knows what you're looking for.",
+    c1: "#f5dfae",
+    c2: "#b8863b",
+    glow: "rgba(200,160,80,.4)",
+    badges: ["Next.js", "React", "Redux Toolkit", "Tailwind"],
   },
   {
-    name: "Project Four",
-    glyph: "❂",
-    tag: "TOOLING",
-    desc: "A slot for a tool, library, or experiment. Placeholder text you can replace whenever inspiration lands.",
-    c1: "#ffd9b8",
-    c2: "#d69a4a",
-    glow: "rgba(255,190,120,.4)",
-    badges: ["Python", "Docker"],
-    demoLink: "https://example.com",
-    githubLink: "https://example.com",
-  },
-  {
-    name: "Project Five",
-    glyph: "✧",
-    tag: "DESIGN",
-    desc: "Reserved for a design-heavy build. Talk about the details you sweated and the calm you were chasing.",
-    c1: "#d8ccff",
-    c2: "#8a76d6",
-    glow: "rgba(170,150,240,.4)",
-    badges: ["Figma", "Framer"],
-    githubLink: "https://example.com",
-  },
-  {
-    name: "Project Six",
-    glyph: "❈",
-    tag: "OPEN SOURCE",
-    desc: "One more placeholder tower. Add a project you gave back to the community, or delete it — your city, your rules.",
-    c1: "#bfe6ff",
-    c2: "#4a90d6",
-    glow: "rgba(120,190,255,.4)",
-    badges: ["Rust", "WASM"],
+    name: "Antitekor",
+    glyph: "✦",
+    image: "/projects/antitekor.png",
+    demoLink: "https://antitekor.com/",
+    tag: "MARKETPLACE",
+    desc: "A neighborhood building-supply run turned into a full storefront — search a material, drop it in a cart, get a delivery quote for Bogor, done before your coffee cools. Swap in the story, the stack and the links when you decide.",
+    c1: "#ffb3ab",
+    c2: "#b0362a",
+    glow: "rgba(210,60,45,.4)",
+    badges: ["Laravel", "Livewire", "Alpine.js", "Tailwind"],
   },
 ];
 

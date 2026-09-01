@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Parallax from "../motion/Parallax";
 import HeroStagger from "./HeroStagger";
 import HeroItem from "./HeroItem";
@@ -5,10 +6,15 @@ import HeroLink from "./HeroLink";
 
 function AvatarSlot() {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[linear-gradient(160deg,#dbe4ff,#f3d9f0)]">
-      <span className="font-[family-name:var(--font-instrument-serif),Georgia,serif] italic text-[52px] text-[#7a7fc4]">
-        B
-      </span>
+    <div className="relative w-full h-full">
+      <Image
+        src="/profile/me-1.jpg"
+        alt="Bagaskara"
+        fill
+        sizes="168px"
+        className="object-cover"
+        priority
+      />
     </div>
   );
 }
@@ -19,7 +25,7 @@ export default function Hero() {
       id="hero"
       aria-labelledby="hero-heading"
       data-screen-label="Hero"
-      className="relative z-2 min-h-screen flex items-center justify-center pt-30 px-[7vw] pb-20"
+      className="relative z-2 min-h-screen flex items-center justify-center pt-22 px-[7vw]"
     >
       <HeroStagger>
         {/* text */}

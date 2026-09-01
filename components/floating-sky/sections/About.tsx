@@ -1,13 +1,18 @@
+import Image from "next/image";
 import Reveal from "../motion/Reveal";
 import LeafFall from "./LeafFall";
 import TiltCard from "./TiltCard";
 
 function PortraitSlot() {
   return (
-    <div className="w-full h-full flex items-center justify-center bg-[linear-gradient(160deg,#e2e8ff,#f6dcee)]">
-      <span className="font-[family-name:var(--font-instrument-serif),Georgia,serif] italic text-[64px] text-[#8a8fce]">
-        B
-      </span>
+    <div className="relative w-full h-full">
+      <Image
+        src="/profile/me-2.jpg"
+        alt="Bagaskara"
+        fill
+        sizes="(min-width: 1024px) 360px, 90vw"
+        className="object-cover"
+      />
     </div>
   );
 }
@@ -18,7 +23,7 @@ export default function About() {
       id="my-story"
       aria-labelledby="story-heading"
       data-screen-label="My Story"
-      className="relative z-2 min-h-screen flex items-center justify-center pt-27.5 px-[7vw] pb-32.5"
+      className="relative z-2 min-h-screen flex items-center justify-center px-[7vw]"
     >
       <LeafFall />
 

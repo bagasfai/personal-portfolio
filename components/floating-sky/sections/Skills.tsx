@@ -10,7 +10,7 @@ export default function Skills() {
       id="workshop"
       aria-labelledby="workshop-heading"
       data-screen-label="Workshop"
-      className="relative z-2 min-h-screen flex flex-col items-center justify-center pt-30 px-[6vw] pb-32.5"
+      className="relative z-2 min-h-screen flex flex-col items-center justify-center px-[6vw] pb-24.5"
     >
       <Reveal className="text-center max-w-160 mb-8">
         <p className="mb-2 font-[family-name:var(--font-caveat),cursive] text-[26px] font-semibold text-(--ink-soft)">
