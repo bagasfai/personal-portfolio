@@ -52,7 +52,7 @@ function Tower({ p }: { p: Project }) {
         className="relative z-4 animate-(--tower-anim)"
       >
         <div className="rounded-t-[26px] rounded-b-[22px] overflow-hidden bg-(--glass) border border-(--glass-brd) backdrop-blur-[18px] backdrop-saturate-[1.25] shadow-[0_26px_54px_rgba(110,100,180,0.26),inset_0_1px_0_rgba(255,255,255,0.6)]">
-          <div className="relative h-37.5 overflow-hidden bg-(--rock2)">
+          <div className="relative h-45 overflow-hidden bg-(--rock2)">
             <Image
               src={p.image}
               alt={`${p.name} homepage screenshot`}
@@ -82,7 +82,7 @@ function Tower({ p }: { p: Project }) {
             <h3 className="mb-2 font-[family-name:var(--font-instrument-serif),serif] font-normal text-2xl text-(--ink)">
               {p.name}
             </h3>
-            <p className="mb-4.5 text-sm leading-[1.6] text-(--ink-soft) min-h-16.5 text-pretty">
+            <p className="mb-4.5 text-sm leading-[1.6] text-(--ink-soft) h-22.5 line-clamp-4 text-pretty">
               {p.desc}
             </p>
             <div className="tower-links flex gap-2.5">

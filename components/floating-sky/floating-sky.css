@@ -450,6 +450,13 @@ html[data-theme="day"] .star {
   animation-play-state: paused;
 }
 
+/* Clouds are always plain white (--c-op set per-cloud at 0.5-0.92), so against the
+   dark night sky they read as glaring ash instead of drifting cloud cover. Dim them
+   in place rather than touching the generator, which day mode still relies on. */
+html[data-theme="night"] .cloud {
+  opacity: calc(var(--c-op) * 0.35);
+}
+
 /* Density on small screens. Generating fewer elements would desynchronise the
    client PRNG from the prerendered HTML — the exact mismatch the seeded
    generator exists to prevent — so hide the surplus instead. */
