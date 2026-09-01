@@ -56,9 +56,6 @@ export const metadata: Metadata = {
     description:
       "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
   },
-  icons: {
-    shortcut: "/favicon.ico",
-  },
   robots: {
     index: true,
     follow: true,
