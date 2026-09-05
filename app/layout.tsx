@@ -6,13 +6,20 @@ import {
   REDUCED_MOTION_QUERY,
 } from "@/components/floating-sky/introTiming";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
+import StructuredData from "@/components/seo/StructuredData";
+import {
+  EXPERTISE,
+  FIRST_NAME,
+  FULL_NAME,
+  LAST_NAME,
+  ROLE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  USERNAMES,
+} from "@/content/site";
 
-// Runs synchronously during HTML parsing, before any body content is parsed, so both
-// decisions are recorded before the browser paints. useEffect runs after paint and
-// useLayoutEffect runs after hydration — neither is early enough. See
-// node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
-// One blocking script rather than two: the intro decision and the theme decision want
-// exactly the same timing, so there is nothing to gain by splitting them.
 const prePaintScript = `(function(){var m=false;try{m=!!(window.matchMedia&&window.matchMedia(${JSON.stringify(
   REDUCED_MOTION_QUERY,
 )}).matches);}catch(e){}var s=false;try{s=sessionStorage.getItem(${JSON.stringify(
@@ -41,20 +48,31 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bagaskara.com"),
-  title: "Bagaskara - Floating Sky Portfolio",
-  description:
-    "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE,
+    template: `%s · ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: "/",
+  },
+  applicationName: SITE_NAME,
   openGraph: {
-    title: "Bagaskara - Floating Sky Portfolio",
-    description:
-      "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+    type: "profile",
+    firstName: FIRST_NAME,
+    lastName: LAST_NAME,
+    username: USERNAMES[0],
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bagaskara - Floating Sky Portfolio",
-    description:
-      "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,
@@ -68,17 +86,20 @@ export const metadata: Metadata = {
     },
   },
   keywords: [
-    "Bagaskara",
-    "Muhammad Bagaskara",
-    "Web Developer",
-    "Personal Page",
-    "freelance",
-    "Web Dev",
-    "Fullstack",
+    FULL_NAME,
+    SITE_NAME,
+    ...USERNAMES,
+    `${FULL_NAME} developer`,
+    `${SITE_NAME} portfolio`,
+    ROLE,
+    "full-stack developer portfolio",
+    "web developer",
+    "freelance developer",
+    ...EXPERTISE,
   ],
-  authors: [{ name: "Bagaskara", url: "https://bagaskara.com" }],
-  creator: "Bagaskara",
-  publisher: "Bagaskara",
+  authors: [{ name: FULL_NAME, url: SITE_URL }],
+  creator: FULL_NAME,
+  publisher: FULL_NAME,
 };
 
 export const viewport: Viewport = {
@@ -101,6 +122,7 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: prePaintScript }} />
+        <StructuredData />
         <noscript>
           <style>{`[data-intro-curtain]{display:none}[data-reveal]{opacity:1!important;transform:none!important}`}</style>
         </noscript>
@@ -108,7 +130,7 @@ export default function RootLayout({
       <body>
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[300] focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-[#3b3e63] focus:font-semibold focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-300 focus:px-4 focus:py-2 focus:rounded-full focus:bg-white focus:text-[#3b3e63] focus:font-semibold focus:shadow-lg"
         >
           Skip to content
         </a>

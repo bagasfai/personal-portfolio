@@ -1,11 +1,16 @@
 import type { MetadataRoute } from "next";
+import {
+  FULL_NAME,
+  ROLE,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+} from "@/content/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Bagaskara - Floating Sky Portfolio",
-    short_name: "Bagaskara",
-    description:
-      "An immersive, single-page developer portfolio — fly through seven floating islands of hero, about, skills, experience, projects, blog, and contact.",
+    name: `${FULL_NAME} — ${ROLE}`,
+    short_name: SITE_NAME,
+    description: SITE_DESCRIPTION,
     start_url: "/",
     display: "standalone",
     background_color: "#eef1ff",

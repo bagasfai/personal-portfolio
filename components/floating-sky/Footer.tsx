@@ -1,3 +1,5 @@
+import { FULL_NAME } from "@/content/site";
+
 export default function Footer() {
   return (
     <footer className="relative z-2 text-center px-[7vw] pt-5 pb-17.5">
@@ -9,7 +11,7 @@ export default function Footer() {
         through it with me. <span className="opacity-70">✦</span>
       </p>
       <p className="mt-4 font-[family-name:var(--font-caveat),cursive] text-xl text-(--ink-soft)">
-        — Bagaskara
+        — {FULL_NAME}
       </p>
     </footer>
   );
