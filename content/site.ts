@@ -20,6 +20,7 @@ export const SITE_TAGLINE = "Full-stack developer — building calm software";
 
 export const SOCIAL_LINKS = [
   "https://www.linkedin.com/in/mhmdbgskr/",
+  "https://www.linkedin.com/in/muhammad-bagaskara-516404172/",
   "https://github.com/bagasfai",
 ];
 
